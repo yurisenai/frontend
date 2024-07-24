@@ -1,1 +1,42 @@
-<p>nav works!</p>
+<nav class="app-nav">
+    <div>
+      <a href="" routerLink="/">
+        <img class="logo-small" src="..\..\assets\images\51greylogo.png" alt="Logo">
+      </a>
+    </div>
+    <div>
+      <input type="text" placeholder=" Search..." class="search-input p-inputtext">
+    </div>
+    <div>
+      <p-menubar>
+        <ul>
+
+          
+          <li>
+            <a href="" routerLink="nav-menu">
+              <i class="pi pi-bars"></i>
+            </a>
+            <ul>
+              <li>
+                <a routerLink="/employees">Employees</a>
+              </li>
+              <li>
+                <a routerLink="/projects">Projects</a>
+              </li>
+              <li>
+                <a routerLink="/account">Account</a>
+              </li>
+              <li>
+                <a routerLink="/" (click)="toggleTheme()">Theme</a>
+              </li>
+              <li>
+                <a routerLink="/logout">Logout</a>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+      </p-menubar>
+    </div>
+  </nav>
+  
