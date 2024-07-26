@@ -6,7 +6,7 @@ import { HttpService } from '../services/http.service';
 import { Project } from '../models/project';
 
 @Component({
-  selector: 'app-employees',
+  selector: 'app-employee',
   standalone: true,
   imports: [CommonModule, EmployeeCardComponent],
   templateUrl: './employee.component.html',
