@@ -1,1 +1,54 @@
 <p>project-card works!</p>
+<article>
+
+    <div class="row-content">
+        <p>{{project.id}} {{project.codename}}</p>
+    </div>
+    <div class="row-content">
+        <p>{{project.description}}</p>
+    </div>
+    
+    <div class="action-icons">
+        <div class="blue">
+            <i class="fas fa-eye" (click)="viewThisProject()"></i>
+        </div>
+        <div class="red">
+            <i class="fas fa-trash" (click)="deleteThisProject()"></i>
+        </div>
+    
+    </div>
+</article>
+
+<article>
+    <form>
+      <div class="row-content">
+        <p>{{ projectId + " " }}</p>
+        <input type="text" [placeholder]="project.codename" name="projectCodeName"
+          [(ngModel)]="projectcodeName" class="editable-input">
+        <input type="text" [placeholder]="project.description" name="projectDescription"
+          [(ngModel)]="projectDescription" class="editable-input">
+      </div>
+      <div class="row-content">
+        <input type="text" [placeholder]="project.minClearance" name="projectMinClearance"
+          [(ngModel)]="projectminClearance" class="editable-input">
+      </div>
+      <div class="row-content">
+        <input type="text" [placeholder]="project.priority" name="projectPriority"
+          [(ngModel)]="projectPriority" class="editable-input">
+      </div>
+      <div class="row-content">
+        <input type="number" [placeholder]="project.personnel" name="projectPersonnel"
+          [(ngModel)]="projectPersonnel" class="editable-input">
+      </div>
+      <div class="row-content">
+        <input type="text" [placeholder]="project.img" name="projectImg"
+          [(ngModel)]="projectImg" class="editable-input">
+      </div>
+    </form>
+    <button (click)="updateProject()">Update Project</button>
+    <button (click)="deleteThisProject()">Delete Project</button>
+    <button (click)="viewThisProject()">View Project</button>
+  </article>
+  
+
+
