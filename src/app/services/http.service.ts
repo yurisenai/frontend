@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { switchMap } from 'rxjs';
+import { min, switchMap } from 'rxjs';
 import { Employee } from '../models/employee';
 import { Project } from '../models/project';
 
@@ -41,7 +41,6 @@ export class HttpService {
           lastName: "Last Name",
           email:"Email",
           phoneNumber:"Phone Number",
-          salary:0,
           projects: []
         };
         return this.http.post(this.url + 'employees', newEmployee, { observe: 'response' });
@@ -50,10 +49,10 @@ export class HttpService {
   }
 
   updateEmployee(id: number, firstName: string, lastName: string, email:string, phoneNumber:string,
-                 salary:number, projId:number) {
+                 occupation:string, clearance:string, img:string, projId:number) {
     return this.http.put(this.url + 'employees/' + id,
-      new Employee(id, firstName, lastName,email,phoneNumber, salary,
-         new Project(projId,'','','','',[])), { observe: 'response' });
+      new Employee(id, firstName, lastName,email,phoneNumber, occupation,clearance,img,
+         new Project(projId,'','','','',0,'',[])), { observe: 'response' });
   }
 
   deleteEmployee(id:number){
@@ -86,7 +85,6 @@ export class HttpService {
           id: highestId + 1,
           name: "New Project",
           description: "New Project Description",
-          department: null,
           employees: []
         };
         return this.http.post(this.url + 'projects', newProject, { observe: 'response' });
@@ -94,9 +92,9 @@ export class HttpService {
     );
   }
 
-  updateProject(id: number, name: string, description: string, startDate: string, endDate: string,employees:any[]) {
+  updateProject(id: number, codename: string, description: string, minClearance:string, priority:string ,personnel:number,img:string, employees:any[]) {
     return this.http.put(this.url + 'projects/' + id,
-      new Project(id, name, description,startDate,endDate, employees), { observe: 'response' });
+      new Project(id, codename, description,minClearance,priority,personnel,img, employees), { observe: 'response' });
   }
 
   deleteProject(id:number){

@@ -18,9 +18,9 @@ export class EmployeeCardComponent {
   holderLastName: string="";
   holderEmail: string="";
   holderPhoneNumber:string="";
-  holderJob:number=0;
-  holderDept:number=0;
-  holderSalary:number=0;
+  holderOccupation:string="";
+  holderClearance:string="";
+  holderImg:string="";
   holderProj:number=0;
   
 
@@ -30,12 +30,14 @@ export class EmployeeCardComponent {
     this.holderLastName=this.employee.lastName;
     this.holderEmail= this.employee.email;
     this.holderPhoneNumber=this.employee.phoneNumber;
-    this.holderSalary=this.employee.salary;
+    this.holderOccupation=this.employee.occupation;
+    this.holderClearance=this.employee.img;
+    this.holderImg=this.employee.img;
     this.holderProj=this.employee.projects.id;
   }
 
   @Input() employee: Employee = new Employee(0,'','',
-    '','',0, new Project(0,'','','','',[]))
+    '','','','','', new Project(0,'','','','',0,'',[]))
 
   @Output() deleteEmployeeEvent = new EventEmitter<number>();
   @Output() updateEmployeeEvent = new EventEmitter<Employee>();
@@ -52,13 +54,15 @@ export class EmployeeCardComponent {
     if (!this.holderLastName){this.holderLastName=this.employee.lastName}
     if (!this.holderEmail){this.holderEmail=this.employee.email}
     if (!this.holderPhoneNumber){this.holderPhoneNumber=this.employee.phoneNumber}
-    if (!this.holderSalary){this.holderSalary=this.employee.salary}
+    if (!this.holderOccupation){this.holderOccupation=this.employee.occupation}
+    if (!this.holderClearance){this.holderClearance=this.employee.clearance}
+    if (!this.holderImg){this.holderImg=this.employee.img}
     if (!this.holderProj){this.holderProj=this.employee.projects.id}
     
 
     this.updateEmployeeEvent.emit(new Employee(this.holderId,
-      this.holderFirstName, this.holderLastName,this.holderEmail,this.holderPhoneNumber,this.holderSalary,
-      new Project(this.holderProj,'','','','',[])));
+      this.holderFirstName, this.holderLastName,this.holderEmail,this.holderPhoneNumber,this.holderOccupation,
+      this.holderClearance,this.holderImg, new Project(this.holderProj,'','','','',0,'',[])));
 
       this.editVisible = !this.editVisible;
   }

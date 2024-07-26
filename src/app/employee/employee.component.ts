@@ -15,7 +15,7 @@ import { Project } from '../models/project';
 
 export class EmployeeComponent {
 
-  employees: Employee[] = [new Employee(10,"y","b","e","4",1,new Project(0,"p","p","sd","ed",[]))];
+  employees: Employee[] = [new Employee(10,"y","b","e","4",'','','',new Project(0,"p","p","sd","ed",0,'',[]))];
 
   constructor(private httpService: HttpService){
     this.getAllEmployees();
@@ -29,7 +29,7 @@ export class EmployeeComponent {
         let body: any = response.body || {}
         for (let item of body) {
           this.employees.push(new Employee(item.id, item.firstName,
-             item.lastName,item.email, item.phoneNumber, item.salary, item.projects));
+             item.lastName,item.email, item.phoneNumber, item.occupation,item.clearance,item.img, item.projects));
           
         }
       }
@@ -56,7 +56,9 @@ export class EmployeeComponent {
       employee.lastName,
       employee.email,
       employee.phoneNumber,
-      employee.salary,
+      employee.occupation,
+      employee.clearance,
+      employee.img,
       employee.projects.id).subscribe(response => {
       this.getAllEmployees();
     });

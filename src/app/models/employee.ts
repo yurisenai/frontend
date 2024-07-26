@@ -6,18 +6,22 @@ export class Employee {
     lastName: string;
     email: string;
     phoneNumber: string;
-    salary:number;
+    occupation:string;
+    clearance: string;
+    img :string;
     projects: Project;
 
     constructor(id: number, firstName: string, lastName: string,
         email: string, phoneNumber: string,
-        salary:number, projects: Project){
+        occupation:string,clearance:string,img:string, projects: Project){
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.salary = salary;
+        this.occupation = occupation;
+        this.clearance = clearance;
+        this.img =img;
         this.projects = projects;
     }
 }

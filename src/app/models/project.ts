@@ -2,20 +2,24 @@
 export class Project {
 
     id: number;
-    name: string;
+    codename: string;
     description: string;
-    startDate: string;
-    endDate: string;
+    minClearance: string;
+    priority: string;
+    personnel: number;
+    img: string;
     employees:any[];
     
 
-    constructor(id: number, name: string, description: string,
-        startDate: string, endDate: string, employees: any[]){
+    constructor(id: number, codename: string, description: string,
+        minClearance: string, priority: string,personnel: number, img:string, employees: any[]){
         this.id = id;
-        this.name = name;
+        this.codename = codename;
         this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.minClearance = minClearance;
+        this.priority = priority;
+        this.personnel = personnel;
+        this.img = img;
         this.employees = employees;
     }
 
