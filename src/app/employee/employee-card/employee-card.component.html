@@ -1,0 +1,75 @@
+<p>employee-card works!</p>
+
+@if(!editVisible){
+    <article>
+
+        <div class="row-content">
+            <p>{{employee.id}} {{employee.firstName}} {{employee.lastName}}</p>
+        </div>
+        <div class="row-content">
+            <p>{{employee.email}}</p>
+        </div>
+        <div class="row-content">
+            <p>{{employee.phoneNumber}}</p>
+        </div>
+        
+        
+        
+        
+    
+        <div class="action-icons">
+            <div class="blue">
+                <i class="fas fa-eye" (click)="viewThisEmployee()"></i>
+            </div>
+            <div class="red">
+                <i class="fas fa-trash" (click)="deleteThisEmployee()"></i>
+            </div>
+        
+        </div>
+    </article>
+}
+
+
+@if(editVisible){
+    <article>
+        <form>
+            <div class="row-content">
+                <p>{{employee.id+" "}}</p>
+                <input type="text" [placeholder]="employee.firstName" name="holderFirstName"
+                [(ngModel)]="holderFirstName" class="editable-input">
+                <input type="text" [placeholder]="employee.lastName" name="holderLastName"
+                [(ngModel)]="holderLastName" class="editable-input">
+            </div>
+            <div class="row-content">
+                <input type="text" [placeholder]="employee.email" name="holderEmail"
+                [(ngModel)]="holderEmail" class="editable-input">
+            </div>
+            <div class="row-content">
+                <input type="text" [placeholder]="employee.phoneNumber" name="holderPhoneNumber"
+                [(ngModel)]="holderPhoneNumber" class="editable-input">
+            </div>
+            <div class="row-content">
+                <label for="holderSalary">Salary: </label>
+                <input type="text" [placeholder]="employee.salary" name="holderSalary"
+                [(ngModel)]="holderSalary" class="editable-input">
+            </div>
+        </form>
+        
+        
+        
+        
+    
+        <div class="action-icons">
+            <div class="green">
+                <i class="fas fa-check" (click)="updateEmployee()"></i>
+            </div>
+            <div class="blue">
+                <i class="fas fa-eye" (click)="viewThisEmployee()"></i>
+            </div>
+            <div class="red">
+                <i class="fas fa-trash" (click)="deleteThisEmployee()"></i>
+            </div>
+        
+        </div>
+    </article>
+}

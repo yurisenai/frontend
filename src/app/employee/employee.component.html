@@ -1,1 +1,14 @@
 <p>employee works!</p>
+    
+<div id="table-header">
+    <i class="fas fa-plus"  (click)="createEmployee()"></i>
+</div>
+
+
+<div class="card-container">    
+    @for (employee of employees; track $index){
+        <app-employee-card [employee]="employee"
+        (updateEmployeeEvent)="updateEmployee($event)"  
+        (deleteEmployeeEvent)="processDeleteEvent($event)"></app-employee-card>
+    }
+</div>
