@@ -15,7 +15,8 @@ import { Project } from '../models/project';
 
 export class EmployeeComponent {
 
-  employees: Employee[] = [new Employee(10,"y","b","e","4",'','','',new Project(0,"p","p","sd","ed",0,'',[]))];
+  employees: Employee[] = [new Employee(100,"Yuri","Beneche"
+    ,"y.beneche@mail.com","407-879-0931",'Dissection Specialist','Top Secret',"",new Project(1,"","","","",0,"",[]))];
 
   constructor(private httpService: HttpService){
     this.getAllEmployees();
