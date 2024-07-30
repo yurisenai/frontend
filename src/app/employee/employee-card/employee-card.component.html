@@ -1,73 +1,73 @@
-<p>employee-card works!</p>
 
 @if(!editVisible){
-    <article>
 
-        <div class="row-content">
-            <p>{{employee.id}} {{employee.firstName}} {{employee.lastName}}</p>
+    <div class="employee-card">
+        <div class="card-header">
+          <h2>AREA 51</h2>
         </div>
-        <div class="row-content">
-            <p>{{employee.id}} {{employee.firstName}} {{employee.lastName}}</p>
+        <div class="card-body">
+          <div class="employee-photo">
+            <img src="../../assets/images/51greylogo.png" alt="Employee Photo" />
+          </div>
+          <div class="employee-info">
+            <p class="employee-name">{{employee.firstName}} {{employee.lastName}}</p>
+            <p class="employee-department">{{employee.occupation}}</p>
+            <p class="employee-id">{{employee.id}} </p>
+          </div>
         </div>
-        <div class="row-content">
-            <p>{{employee.email}}</p>
-        </div>
-        <div class="row-content">
-            <p>{{employee.phoneNumber}}</p>
-        </div>
-        
-        
-        
-        
-    
         <div class="action-icons">
-            <div class="blue">
-                <i class="fas fa-eye" (click)="viewThisEmployee()"></i>
+            <div class="icon-container">
+                <div class="blue">
+                    <i class="pi pi-eye"  (click)="toggleEditVisible()"></i>
+                </div>
+                <div class="red">
+                    <i class="pi pi-trash" ></i>
+                </div>
             </div>
-            <div class="red">
-                <i class="fas fa-trash" (click)="deleteThisEmployee()"></i>
-            </div>
-        
         </div>
-    </article>
+        <div class="card-footer">
+          <p>{{employee.clearance}}</p>
+          <p>SECURITY PASS</p>
+        </div>
+      </div>
 }
 
 
 @if(editVisible){
-    <article>
-        <form>
-            <div class="row-content">
-                <p>{{employee.id+" "}}</p>
-                <input type="text" [placeholder]="employee.firstName" name="holderFirstName"
-                [(ngModel)]="holderFirstName" class="editable-input">
-                <input type="text" [placeholder]="employee.lastName" name="holderLastName"
-                [(ngModel)]="holderLastName" class="editable-input">
-            </div>
-            <div class="row-content">
-                <input type="text" [placeholder]="employee.email" name="holderEmail"
-                [(ngModel)]="holderEmail" class="editable-input">
-            </div>
-            <div class="row-content">
-                <input type="text" [placeholder]="employee.phoneNumber" name="holderPhoneNumber"
-                [(ngModel)]="holderPhoneNumber" class="editable-input">
-            </div>
-        </form>
-        
-        
-        
-        
-    
+
+    <div class="employee-card">
+        <div class="card-header">
+          <h2>AREA 51</h2>
+        </div>
+        <div class="card-body">
+          <div class="employee-photo">
+            <img src="../../assets/images/51greylogo.png" alt="Employee Photo" />
+          </div>
+          <div class="employee-info">
+            <div class="name-container">
+                <input type="text" class="employee-name" [(ngModel)]="employee.firstName" placeholder="First Name">
+                <input type="text" class="employee-lastname" [(ngModel)]="employee.lastName" placeholder="Last Name">
+              </div>
+            <input type="text" class="employee-department" [(ngModel)]="employee.occupation" placeholder="Occupation">
+            <input type="text" class="employee-id" [(ngModel)]="employee.id" placeholder="ID">
+          </div>
+        </div>
         <div class="action-icons">
+          <div class="icon-container">
             <div class="green">
-                <i class="fas fa-check" (click)="updateEmployee()"></i>
-            </div>
+                <i class="pi pi-check" ></i>
+              </div>
             <div class="blue">
-                <i class="fas fa-eye" (click)="viewThisEmployee()"></i>
+              <i class="pi pi-eye" (click)="toggleEditVisible()"></i>
             </div>
             <div class="red">
-                <i class="fas fa-trash" (click)="deleteThisEmployee()"></i>
+              <i class="pi pi-trash"></i>
             </div>
-        
+          </div>
         </div>
-    </article>
+        <div class="card-footer">
+          <input type="text" [(ngModel)]="employee.clearance" placeholder="Clearance Level">
+          <p>SECURITY PASS</p>
+        </div>
+      </div>
 }

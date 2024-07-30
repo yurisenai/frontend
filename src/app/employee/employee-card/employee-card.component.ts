@@ -43,6 +43,11 @@ export class EmployeeCardComponent {
   @Output() updateEmployeeEvent = new EventEmitter<Employee>();
   @Output() viewEmployeeEvent = new EventEmitter<Employee>();
 
+
+  toggleEditVisible(): void {
+    this.editVisible = !this.editVisible;
+  }
+
   viewThisEmployee() {
     this.viewEmployeeEvent.emit(this.employee);
     this.editVisible = !this.editVisible;
