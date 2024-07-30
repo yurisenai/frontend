@@ -1,0 +1,130 @@
+.employee-card {
+    width: 250px;
+    border: 2px solid #000;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    color: #000;   
+    background-color: #fff;
+    text-align: center;
+    box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.2);
+  
+    .card-header {
+      background-color: #000;
+      color: #fff;
+      padding: 10px;
+  
+      h2 {
+        margin: 0;
+        font-size: 1.2em;
+        letter-spacing: 1px;
+      }
+    }
+  
+    .card-body {
+      padding: 15px;
+  
+      .employee-photo {
+        margin-bottom: 10px;
+  
+        img {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+        }
+      }
+  
+      .employee-info {
+        input{
+              font-weight: normal;
+              font-size: 0.85em;
+              letter-spacing: 0.5px;
+              height: 1.5em;
+        }
+        .name-container {
+            display: flex;
+            justify-content: space-between;
+    
+            input {
+              width: 48%; 
+              font-weight: normal;
+              font-size: 0.85em;
+              letter-spacing: 0.5px;
+              height: 1.5em;
+            }
+          }
+        .employee-name {
+          font-weight: bold;
+          margin-bottom: 5px;
+          font-size: 1.1em;
+        }
+  
+        .employee-department {
+          font-size: 0.9em;
+          color: #555;
+        }
+  
+        .employee-id {
+          font-size: 0.8em;
+          color: rgba(0, 0, 0, 0.5); /* Lower opacity */
+        }
+      }
+    }
+  
+    .action-icons {
+      display: flex;
+      justify-content: flex-end;
+      margin: 5px 0;
+      padding: 0 10px 0 0;
+      
+  
+      .icon-container {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 5px;
+        gap: 5px;
+        cursor: pointer;
+        transition: transform 0.2s, color 0.2s;
+  
+
+        .green {
+            color: #000000; 
+    
+            &:hover {
+              color: #35cd42;
+              transform: scale(1.2);
+            }
+          }
+
+        .blue {
+          color: #000000; 
+  
+          &:hover {
+            color: #357fcd;
+            transform: scale(1.2);
+          }
+        }
+  
+        .red {
+          color: #000000; 
+  
+          &:hover {
+            color: #d43a49; 
+            transform: scale(1.2);
+          }
+        }
+      }
+    }
+  
+    .card-footer {
+      background-color: #f0f0f0;
+      padding: 10px;
+  
+      p {
+        margin: 0;
+        font-size: 0.85em;
+        letter-spacing: 0.5px;
+      }
+    }
+  }

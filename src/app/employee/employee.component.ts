@@ -15,8 +15,12 @@ import { Project } from '../models/project';
 
 export class EmployeeComponent {
 
-  employees: Employee[] = [new Employee(100,"Yuri","Beneche"
-    ,"y.beneche@mail.com","407-879-0931",'Dissection Specialist','Top Secret',"",new Project(1,"","","","",0,"",[]))];
+  employees: Employee[] = [new Employee(10000002,"Noah","Chun"
+    ,"n.chun@mail.com","123-456-7890",'Inter-galactic Comms','Secret',"",new Project(1,"","","","",0,"",[])),
+    new Employee(10000001,"Yuri","Beneche"
+      ,"y.beneche@mail.com","407-879-0931",'Dissection Specialist','Top Secret',"",new Project(1,"","","","",0,"",[])),
+      new Employee(10000003,"Nate","Koromon"
+        ,"n.koromon@mail.com","123-123-1234",'UAP Technician','National Interest',"",new Project(1,"","","","",0,"",[]))];
 
   constructor(private httpService: HttpService){
     this.getAllEmployees();
