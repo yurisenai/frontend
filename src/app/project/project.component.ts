@@ -18,11 +18,31 @@ export class ProjectComponent {
   projects: Project[] = [
     new Project(
       1,
-      'Reverse Engineer Alien Ship',
-      'Analyze alien technology and recreate it',
+      'Reverse Engineer Ship',
+      'Analyze alien technology and recreate it.',
       'Top Secret',
       'High',
       50,
+      '',
+      []
+    ),
+    new Project(
+      2,
+      'Alien Translation System',
+      'Analyze alien language and translate it.',
+      'Secret',
+      'Middle',
+      35,
+      '',
+      []
+    ),
+    new Project(
+      3,
+      'Test Laser Firearms',
+      'Understand the mechanisms of alien technology.',
+      'Top Secret',
+      'Middle',
+      20,
       '',
       []
     )
