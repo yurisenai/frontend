@@ -1,54 +1,20 @@
-<p>project-card works!</p>
-<article>
-
-    <div class="row-content">
-        <p>{{project.id}} {{project.codename}}</p>
-    </div>
-    <div class="row-content">
-        <p>{{project.description}}</p>
-    </div>
-    
-    <div class="action-icons">
-        <div class="blue">
-            <i class="fas fa-eye" (click)="viewThisProject()"></i>
-        </div>
-        <div class="red">
-            <i class="fas fa-trash" (click)="deleteThisProject()"></i>
-        </div>
-    
-    </div>
-</article>
-
-<article>
-    <form>
-      <div class="row-content">
-        <p>{{ projectId + " " }}</p>
-        <input type="text" [placeholder]="project.codename" name="projectCodeName"
-          [(ngModel)]="projectcodeName" class="editable-input">
-        <input type="text" [placeholder]="project.description" name="projectDescription"
-          [(ngModel)]="projectDescription" class="editable-input">
-      </div>
-      <div class="row-content">
-        <input type="text" [placeholder]="project.minClearance" name="projectMinClearance"
-          [(ngModel)]="projectminClearance" class="editable-input">
-      </div>
-      <div class="row-content">
-        <input type="text" [placeholder]="project.priority" name="projectPriority"
-          [(ngModel)]="projectPriority" class="editable-input">
-      </div>
-      <div class="row-content">
-        <input type="number" [placeholder]="project.personnel" name="projectPersonnel"
-          [(ngModel)]="projectPersonnel" class="editable-input">
-      </div>
-      <div class="row-content">
-        <input type="text" [placeholder]="project.img" name="projectImg"
-          [(ngModel)]="projectImg" class="editable-input">
-      </div>
-    </form>
-    <button (click)="updateProject()">Update Project</button>
-    <button (click)="deleteThisProject()">Delete Project</button>
-    <button (click)="viewThisProject()">View Project</button>
-  </article>
+<div class="folder-container">
+  <img src="./assets/images/folder2.svg" alt="Folder" class="folder-svg">
   
-
+  <div class="folder-content">
+    <img *ngIf="project.minClearance === 'Top Secret'" src="./assets/images/top-secret-icon.png" alt="Top Secret" class="top-secret-icon">
+    
+    <h3>{{ project.codename }}</h3>
+    <p>{{ project.description }}</p>
+    <p>Minimum Clearance: {{ project.minClearance }}</p>
+    <p>Priority: {{ project.priority }}</p>
+    <p>Personnel: {{ project.personnel }}</p>
+    
+    <div class="action-buttons">
+      <button (click)="viewThisProject()">View</button>
+      <button (click)="updateProject()">Update</button>
+      <button (click)="deleteThisProject()">Delete</button>
+    </div>
+  </div>
+</div>
 
