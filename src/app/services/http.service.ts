@@ -11,22 +11,22 @@ import { Project } from '../models/project';
 export class HttpService {
 
   constructor(private http: HttpClient) { }
-  
+
   url: String = 'http://localhost:8080/'
 
 
-  
+
   //EMPLOYEES
   getAllEmployees(){
-    return this.http.get(this.url + 'employees', { observe : 'response'});
+    return this.http.get(this.url + 'employee', { observe : 'response'});
   }
 
   getEmployeeById(id:number){
-    return this.http.get(this.url + 'employees/' + id, {observe:'response'})
+    return this.http.get(this.url + 'employee/' + id, {observe:'response'})
   }
 
   createEmployee() {
-    return this.http.get(this.url + 'employees', { observe: 'response' }).pipe(
+    return this.http.get(this.url + 'employee', { observe: 'response' }).pipe(
       switchMap(response => {
         const employees = response.body as any[];
         let highestId = 0;
@@ -43,20 +43,20 @@ export class HttpService {
           phoneNumber:"Phone Number",
           projects: []
         };
-        return this.http.post(this.url + 'employees', newEmployee, { observe: 'response' });
+        return this.http.post(this.url + 'employee', newEmployee, { observe: 'response' });
       })
     );
   }
 
   updateEmployee(id: number, firstName: string, lastName: string, email:string, phoneNumber:string,
                  occupation:string, clearance:string, img:string, projId:number) {
-    return this.http.put(this.url + 'employees/' + id,
+    return this.http.put(this.url + 'employee/' + id,
       new Employee(id, firstName, lastName,email,phoneNumber, occupation,clearance,img,
          new Project(projId,'','','','',0,'',[])), { observe: 'response' });
   }
 
   deleteEmployee(id:number){
-    return this.http.delete(this.url + 'employees/' + id,
+    return this.http.delete(this.url + 'employee/' + id,
                              {observe:'response'})
   }
 
@@ -64,15 +64,15 @@ export class HttpService {
 
   //PROJECTS
   getAllProjects(){
-    return this.http.get(this.url + 'projects', { observe : 'response'});
+    return this.http.get(this.url + 'project', { observe : 'response'});
   }
 
   getProjectById(id:number){
-    return this.http.get(this.url + 'projects/' + id, {observe:'response'})
+    return this.http.get(this.url + 'project/' + id, {observe:'response'})
   }
 
   createProject() {
-    return this.http.get(this.url + 'projects', { observe: 'response' }).pipe(
+    return this.http.get(this.url + 'project', { observe: 'response' }).pipe(
       switchMap(response => {
         const projects = response.body as any[];
         let highestId = 0;
@@ -87,18 +87,18 @@ export class HttpService {
           description: "New Project Description",
           employees: []
         };
-        return this.http.post(this.url + 'projects', newProject, { observe: 'response' });
+        return this.http.post(this.url + 'project', newProject, { observe: 'response' });
       })
     );
   }
 
   updateProject(id: number, codename: string, description: string, minClearance:string, priority:string ,personnel:number,img:string, employees:any[]) {
-    return this.http.put(this.url + 'projects/' + id,
+    return this.http.put(this.url + 'project/' + id,
       new Project(id, codename, description,minClearance,priority,personnel,img, employees), { observe: 'response' });
   }
 
   deleteProject(id:number){
-    return this.http.delete(this.url + 'projects/' + id,
+    return this.http.delete(this.url + 'project/' + id,
                             {observe:'response'})
   }
 }

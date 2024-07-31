@@ -1,34 +1,32 @@
 .dashboard {
   display: flex;
   height: 100vh;
-  background-color: #121212;
+  background-color: var(--background-color);
 }
 
 .map-container {
   flex: 2;
   position: relative;
-  background-color: #1c1c1c;
-  border-right: 1px solid #333;
   margin: 1vw;
 }
 
 .side-panel {
   flex: 1;
   padding: 20px;
-  background-color: #1c1c1c;
-  color: #fff;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
   overflow-y: auto;
 }
 
 .employee-card {
-  background-color: #2a2a2a;
+  background-color: var(--primary-color);
   margin-bottom: 20px;
   padding: 10px 25px 10px 25px;
   border-radius: 5px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .project-card {
-  background-color: #2a2a2a;
+  background-color: var(--primary-color);
   margin-bottom: 20px;
   padding: 1px 10px 15px 10px;
   border-radius: 5px;

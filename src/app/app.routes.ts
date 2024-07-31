@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { LandingComponent } from './landing/landing.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { ProjectComponent } from './project/project.component';
-import { AccountComponent } from './account/account.component';
 import { MapsComponent } from './maps/maps.component';
 
 export const routes: Routes = [
@@ -17,10 +16,6 @@ export const routes: Routes = [
     {
         path:'projects',
         component: ProjectComponent
-    },
-    {
-        path:'account',
-        component: AccountComponent
     },
     {
       path:'map',
