@@ -1,31 +1,40 @@
-<div class="global">
-    <div class="logo-container">
-        <img src="assets/images/51greybackground.png" alt="Logo" class="logo">
+<div class="dashboard">
+  <div class="map-container">
+    <app-maps></app-maps>
+  </div>
+  <div class="side-panel">
+
+
+
+
+    <div class="view-container" *ngIf="isProjectView">
+      <button class="toggle-button" (click)="toggleView()">Show Agents</button>
+      <div class="project-card" *ngFor="let project of projects">
+        <h3>{{ project.name }}</h3>
+        <div class="status-bar">
+          <div class="bar staff" [style.width.%]="project.staff.count">Staff Count</div>
+          <div class="bar completion" [style.width.%]="project.completion.percent">Completion Percentage</div>
+        </div>
+      </div>
     </div>
-    <div class="grid-container">
-        <div class="grid-content">
-            <div><b>Divisions</b></div>
-            <div><img src="./assets/images/security.png" class="icon"><a href="#">Security (Fully Staffed)</a></div>
-            <div><img src="./assets/images/counterintel.png" class="icon"><a href="#">Counter-Intelligence</a></div>
+
+    <div class="view-container" *ngIf="!isProjectView">
+      <button class="toggle-button" (click)="toggleView()">Show Missions</button>
+      <div class="employee-card" *ngFor="let employee of employees">
+
+        <div class="left-container">
+          <div>
+            <img [src]="employee.pfp" alt="Profile Picture" class="pfp"/>
+          </div>
+
+          <div class="employee-name">
+            {{ employee.name }}
+          </div>
         </div>
-        <div class="grid-content">
-            <div><b>Projects</b></div>
-            <div><img src="./assets/images/alienship.png" class="icon"><a href="#">Reverse Engineer Alien Ship - <div class="yellow-text">78% Complete</div></a></div>
-            <div><img src="./assets/images/alientranslate.png" class="icon"><a href="#">Alien Translation System - <div class="orange-text">45% Complete</div></a></div>
-            <div><img src="./assets/images/lasergun.png" class="icon"><a href="#">Test Laser Firearms - <div class="green-text">100% Complete</div></a></div>
-        </div>
-        <div class="grid-content">
-            <div><b>To-Do</b></div>
-            <div><a href="#">Keep raiders out (In-Progress)</a></div>
-            <div><a href="#">Maintain Closed Airspace</a></div>
-        </div>
-        <div class="grid-content">
-            <div><b>Employees</b></div>
-            <div><img src="./assets/images/person1.png" class="headshot"><a href="#">Alyssa Johnson</a></div>
-            <div><img src="./assets/images/person2.png" class="headshot"><a href="#">Sophia Martinez</a></div>
-            <div><img src="./assets/images/person3.png" class="headshot"><a href="#">Michael Anderson</a></div>
-            <div><img src="./assets/images/person4.png" class="headshot"><a href="#">James Brown</a></div>
-        </div>        
+        <span> {{ employee.location }}</span>
+      </div>
     </div>
-</div> 
-  
+  </div>
+</div>
+
+
