@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { min, switchMap } from 'rxjs';
 import { Employee } from '../models/employee';
 import { Project } from '../models/project';
+import { Clearance } from '../models/clearance';
+import { Location } from '../models/location';
 
 
 @Injectable({
@@ -41,7 +43,9 @@ export class HttpService {
           lastName: "Last Name",
           email:"Email",
           phoneNumber:"Phone Number",
-          projects: []
+          occupation: 1 ,
+          Location: 1,
+          projects: 1
         };
         return this.http.post(this.url + 'employee', newEmployee, { observe: 'response' });
       })
@@ -49,10 +53,10 @@ export class HttpService {
   }
 
   updateEmployee(id: number, firstName: string, lastName: string, email:string, phoneNumber:string,
-                 occupation:string, clearance:string, img:string, projId:number) {
+                 occupation:string, clearId:number, img:string, projId:number,localId:number) {
     return this.http.put(this.url + 'employee/' + id,
-      new Employee(id, firstName, lastName,email,phoneNumber, occupation,clearance,img,
-         new Project(projId,'','','','',0,'',[])), { observe: 'response' });
+      new Employee(id, firstName, lastName,email,phoneNumber, occupation,new Clearance(clearId,'',[]),img,
+         new Project(projId,'','','','',0,'',[]), new Location(localId,'','','',0,0,[])), { observe: 'response' });
   }
 
   deleteEmployee(id:number){

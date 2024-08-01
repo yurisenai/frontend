@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Employee } from '../../models/employee';
 import { Project } from '../../models/project';
 import { FormsModule } from '@angular/forms';
+import { Location } from '../../models/location';
+import { Clearance } from '../../models/clearance';
 
 @Component({
   selector: 'app-employee-card',
@@ -19,10 +21,11 @@ export class EmployeeCardComponent {
   holderEmail: string="";
   holderPhoneNumber:string="";
   holderOccupation:string="";
-  holderClearance:string="";
+  holderClear:number=0;
   holderImg:string="";
   holderProj:number=0;
-  
+  holderLocal:number=0
+
 
   constructor(){
     this.holderId=this.employee.id;
@@ -31,13 +34,14 @@ export class EmployeeCardComponent {
     this.holderEmail= this.employee.email;
     this.holderPhoneNumber=this.employee.phoneNumber;
     this.holderOccupation=this.employee.occupation;
-    this.holderClearance=this.employee.img;
+    this.holderClear=this.employee.clearance.id;
     this.holderImg=this.employee.img;
     this.holderProj=this.employee.projects.id;
+    this.holderLocal=this.employee.location.id;
   }
 
   @Input() employee: Employee = new Employee(0,'','',
-    '','','','','', new Project(0,'','','','',0,'',[]))
+    '','','',new Clearance(0,'',[]),'', new Project(0,'','','','',0,'',[]), new Location(0,'','','',0,0,[]))
 
   @Output() deleteEmployeeEvent = new EventEmitter<number>();
   @Output() updateEmployeeEvent = new EventEmitter<Employee>();
@@ -60,14 +64,16 @@ export class EmployeeCardComponent {
     if (!this.holderEmail){this.holderEmail=this.employee.email}
     if (!this.holderPhoneNumber){this.holderPhoneNumber=this.employee.phoneNumber}
     if (!this.holderOccupation){this.holderOccupation=this.employee.occupation}
-    if (!this.holderClearance){this.holderClearance=this.employee.clearance}
+    if (!this.holderClear){this.holderClear=this.employee.clearance.id}
     if (!this.holderImg){this.holderImg=this.employee.img}
     if (!this.holderProj){this.holderProj=this.employee.projects.id}
-    
+    if (!this.holderLocal){this.holderProj=this.employee.location.id}
+
 
     this.updateEmployeeEvent.emit(new Employee(this.holderId,
       this.holderFirstName, this.holderLastName,this.holderEmail,this.holderPhoneNumber,this.holderOccupation,
-      this.holderClearance,this.holderImg, new Project(this.holderProj,'','','','',0,'',[])));
+      new Clearance(this.holderClear, '',[]),this.holderImg, new Project(this.holderProj,'','','','',0,'',[]),
+      new Location(this.holderLocal,'','','',0,0,[])));
 
       this.editVisible = !this.editVisible;
   }

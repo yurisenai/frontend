@@ -15,12 +15,7 @@ import { Project } from '../models/project';
 
 export class EmployeeComponent {
 
-  employees: Employee[] = [new Employee(10000002,"Noah","Chun"
-    ,"n.chun@mail.com","123-456-7890",'Inter-galactic Comms','Secret',"",new Project(1,"","","","",0,"",[])),
-    new Employee(10000001,"Yuri","Beneche"
-      ,"y.beneche@mail.com","407-879-0931",'Dissection Specialist','Top Secret',"",new Project(1,"","","","",0,"",[])),
-      new Employee(10000003,"Nate","Koromon"
-        ,"n.koromon@mail.com","123-123-1234",'UAP Technician','National Interest',"",new Project(1,"","","","",0,"",[]))];
+  employees: Employee[] = [];
 
   constructor(private httpService: HttpService){
     this.getAllEmployees();
@@ -34,8 +29,8 @@ export class EmployeeComponent {
         let body: any = response.body || {}
         for (let item of body) {
           this.employees.push(new Employee(item.id, item.firstName,
-             item.lastName,item.email, item.phoneNumber, item.occupation,item.clearance,item.img, item.projects));
-          
+             item.lastName,item.email, item.phoneNumber, item.occupation,item.clearance,item.img, item.projects,item.location));
+
         }
       }
     });
@@ -62,9 +57,10 @@ export class EmployeeComponent {
       employee.email,
       employee.phoneNumber,
       employee.occupation,
-      employee.clearance,
+      employee.clearance.id,
       employee.img,
-      employee.projects.id).subscribe(response => {
+      employee.projects.id,
+      employee.location.id).subscribe(response => {
       this.getAllEmployees();
     });
   }
