@@ -7,7 +7,7 @@
         </div>
         <div class="card-body">
           <div class="employee-photo">
-            <img src="../../assets/images/51greylogo.png" alt="Employee Photo" />
+            <img [src]="employee.img ? employee.img :'../../assets/images/51greylogo.png'" alt="Employee Photo" />
           </div>
           <div class="employee-info">
             <p class="employee-name">{{employee.firstName}} {{employee.lastName}}</p>
@@ -21,12 +21,12 @@
                     <i class="pi pi-eye"  (click)="toggleEditVisible()"></i>
                 </div>
                 <div class="red">
-                    <i class="pi pi-trash" ></i>
+                    <i class="pi pi-trash" (click)="deleteThisEmployee()"></i>
                 </div>
             </div>
         </div>
         <div class="card-footer">
-          <p>{{employee.clearance}}</p>
+          <p>{{employee.clearance.clearance}}</p>
           <p>SECURITY PASS</p>
         </div>
       </div>
@@ -35,39 +35,52 @@
 
 @if(editVisible){
 
-    <div class="employee-card">
+      <div class="employee-card">
+        <form>
         <div class="card-header">
           <h2>AREA 51</h2>
         </div>
         <div class="card-body">
           <div class="employee-photo">
-            <img src="../../assets/images/51greylogo.png" alt="Employee Photo" />
+            <img [src]="employee.img || '../../assets/images/51greylogo.png'" alt="Employee Photo" />
           </div>
           <div class="employee-info">
             <div class="name-container">
-                <input type="text" class="employee-name" [(ngModel)]="employee.firstName" placeholder="First Name">
-                <input type="text" class="employee-lastname" [(ngModel)]="employee.lastName" placeholder="Last Name">
-              </div>
-            <input type="text" class="employee-department" [(ngModel)]="employee.occupation" placeholder="Occupation">
-            <input type="text" class="employee-id" [(ngModel)]="employee.id" placeholder="ID">
+              <input type="text" class="employee-name" name="holderFirstName" [(ngModel)] = "holderFirstName" [placeholder]="employee.firstName || 'First Name'">
+              <input type="text" class="employee-lastname"  name="holderLastName" [(ngModel)] = "holderLastName" [placeholder]="employee.lastName || 'Last Name'">
+            </div>
+            <input type="text" class="employee-department" [placeholder]="employee.occupation || 'Occupation'">
+            <input type="text" class="employee-id"  [placeholder]="employee.id || 'ID'">
+            <input type="text" class="employee-department"  [placeholder]="employee.phoneNumber || 'Phone Number'">
+            <input type="text" class="employee-id"  [placeholder]="employee.email || 'Email'">
+            <input type="text" class="employee-id"  [placeholder]="employee.img || 'Image URL'">
           </div>
         </div>
         <div class="action-icons">
           <div class="icon-container">
             <div class="green">
-                <i class="pi pi-check" ></i>
-              </div>
+              <i class="pi pi-check" (click)="updateEmployee()"></i>
+            </div>
             <div class="blue">
               <i class="pi pi-eye" (click)="toggleEditVisible()"></i>
             </div>
             <div class="red">
-              <i class="pi pi-trash"></i>
+              <i class="pi pi-trash" (click)="deleteThisEmployee()"></i>
             </div>
           </div>
         </div>
         <div class="card-footer">
-          <input type="text" [(ngModel)]="employee.clearance" placeholder="Clearance Level">
+          <select [(ngModel)]="employee.clearance.id" name="clearanceId">
+            <option value="" disabled selected hidden>{{ employee.clearance.id  ? getClearanceLabel(employee.clearance.id) : 'Clearance Level' }}</option>
+            <option value="1">Top Secret</option>
+            <option value="2">Secret</option>
+            <option value="3">Confidential</option>
+            <option value="4">Q Clearance</option>
+            <option value="5">L Clearance</option>
+          </select>
           <p>SECURITY PASS</p>
         </div>
+      </form>
       </div>
+
 }

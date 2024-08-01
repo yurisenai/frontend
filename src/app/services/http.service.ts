@@ -56,7 +56,7 @@ export class HttpService {
                  occupation:string, clearId:number, img:string, projId:number,localId:number) {
     return this.http.put(this.url + 'employee/' + id,
       new Employee(id, firstName, lastName,email,phoneNumber, occupation,new Clearance(clearId,'',[]),img,
-         new Project(projId,'','','','',0,'',[]), new Location(localId,'','','',0,0,[])), { observe: 'response' });
+         new Project(projId,'','',new Clearance(0,'',[]),'',0,'',[]), new Location(localId,'','','',0,0,[])), { observe: 'response' });
   }
 
   deleteEmployee(id:number){
@@ -89,7 +89,7 @@ export class HttpService {
           id: highestId + 1,
           codename: "New Project",
           description: "New Project Description",
-          minClearance: new Clearance(0, 'Top Secret', []), 
+          minClearance: new Clearance(0, 'Top Secret', []),
           priority: 'Low',
           personnel: 0,
           img: '',
@@ -104,7 +104,7 @@ export class HttpService {
     return this.http.put(this.url + 'project/' + id,
       new Project(id, codename, description, minClearance, priority, personnel, img, employees), { observe: 'response' });
   }
-  
+
 
   deleteProject(id: number): Observable<any> {
     return this.http.delete(this.url + 'project/' + id, { observe: 'response' });

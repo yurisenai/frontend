@@ -41,7 +41,7 @@ export class EmployeeCardComponent {
   }
 
   @Input() employee: Employee = new Employee(0,'','',
-    '','','',new Clearance(0,'',[]),'', new Project(0,'','','','',0,'',[]), new Location(0,'','','',0,0,[]))
+    '','','',new Clearance(0,'',[]),'', new Project(0,'','',new Clearance(0,'',[]),'',0,'',[]), new Location(0,'','','',0,0,[]))
 
   @Output() deleteEmployeeEvent = new EventEmitter<number>();
   @Output() updateEmployeeEvent = new EventEmitter<Employee>();
@@ -72,7 +72,7 @@ export class EmployeeCardComponent {
 
     this.updateEmployeeEvent.emit(new Employee(this.holderId,
       this.holderFirstName, this.holderLastName,this.holderEmail,this.holderPhoneNumber,this.holderOccupation,
-      new Clearance(this.holderClear, '',[]),this.holderImg, new Project(this.holderProj,'','','','',0,'',[]),
+      new Clearance(this.holderClear, '',[]),this.holderImg, new Project(this.holderProj,'','',new Clearance(0,'',[]),'',0,'',[]),
       new Location(this.holderLocal,'','','',0,0,[])));
 
       this.editVisible = !this.editVisible;
@@ -83,6 +83,24 @@ export class EmployeeCardComponent {
     console.log(this.employee.id)
     this.deleteEmployeeEvent.emit(this.employee.id);
 
+  }
+
+
+  getClearanceLabel(id: number): string {
+    switch (id) {
+      case 1:
+        return 'Top Secret';
+      case 2:
+        return 'Secret';
+      case 3:
+        return 'Confidential';
+      case 4:
+        return 'Q Clearance';
+      case 5:
+        return 'L Clearance';
+      default:
+        return 'Clearance Level';
+    }
   }
 
 }
