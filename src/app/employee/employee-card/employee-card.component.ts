@@ -34,7 +34,7 @@ export class EmployeeCardComponent {
     this.holderEmail= this.employee.email;
     this.holderPhoneNumber=this.employee.phoneNumber;
     this.holderOccupation=this.employee.occupation;
-    this.holderClear=this.employee.clearance.id;
+    this.holderClear=this.employee.clearance.clearanceLevel;
     this.holderImg=this.employee.img;
     this.holderProj=this.employee.projects.id;
     this.holderLocal=this.employee.location.id;
@@ -64,7 +64,7 @@ export class EmployeeCardComponent {
     if (!this.holderEmail){this.holderEmail=this.employee.email}
     if (!this.holderPhoneNumber){this.holderPhoneNumber=this.employee.phoneNumber}
     if (!this.holderOccupation){this.holderOccupation=this.employee.occupation}
-    if (!this.holderClear){this.holderClear=this.employee.clearance.id}
+    if (!this.holderClear){this.holderClear=this.employee.clearance.clearanceLevel}
     if (!this.holderImg){this.holderImg=this.employee.img}
     if (!this.holderProj){this.holderProj=this.employee.projects.id}
     if (!this.holderLocal){this.holderProj=this.employee.location.id}

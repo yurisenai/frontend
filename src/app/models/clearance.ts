@@ -1,13 +1,13 @@
 import { Employee } from "./employee";
 
 export class Clearance {
-  id: number;
-  clearance: string;
+  clearanceLevel: number;
+  clearanceType: string;
   employees: any[];
 
-  constructor(id?: number, clearance?: string, employees?: any[]) {
-    this.id = id || 0;
-    this.clearance = clearance || '';
+  constructor(clearanceLevel?: number, clearanceType?: string, employees?: any[]) {
+    this.clearanceLevel = clearanceLevel || 0;
+    this.clearanceType = clearanceType || '';
     this.employees = employees || [];
   }
 }

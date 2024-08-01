@@ -53,14 +53,14 @@ export class ProjectComponent {
   getAllProjects() {
     this.httpService.getAllProjects().subscribe(response => {
       if (response && response.body) {
-        this.projects = []; 
+        this.projects = [];
         let body: any = response.body || [];
         for (let item of body) {
           this.projects.push(new Project(
             item.id,
             item.codename,
             item.description,
-            new Clearance(item.minClearance.id, item.minClearance.clearance, item.minClearance.employees),  
+            new Clearance(item.minClearance.id, item.minClearance.clearance, item.minClearance.employees),
             item.priority,
             item.personnel,
             item.img,
@@ -79,7 +79,7 @@ export class ProjectComponent {
         //   // item.id,
         //   // item.codename,
         //   // item.description,
-        //   // item.minClearance as Clearance,  
+        //   // item.minClearance as Clearance,
         //   // item.priority,
         //   // item.personnel,
         //   // item.img,
@@ -97,8 +97,8 @@ export class ProjectComponent {
 
   updateProject(project: Project) {
     const clearanceObj = new Clearance(
-        project.minClearance.id, 
-        project.minClearance.clearance, 
+        project.minClearance.clearanceLevel,
+        project.minClearance.clearanceType,
         project.minClearance.employees
     );
 
@@ -106,7 +106,7 @@ export class ProjectComponent {
         project.id,
         project.codename,
         project.description,
-        clearanceObj,  
+        clearanceObj,
         project.priority,
         project.personnel,
         project.img,

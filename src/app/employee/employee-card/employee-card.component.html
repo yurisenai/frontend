@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="card-footer">
-          <p>{{employee.clearance.clearance}}</p>
+          <p>{{employee.clearance.clearanceType}}</p>
           <p>SECURITY PASS</p>
         </div>
       </div>
@@ -70,8 +70,8 @@
           </div>
         </div>
         <div class="card-footer">
-          <select [(ngModel)]="employee.clearance.id" name="clearanceId">
-            <option value="" disabled selected hidden>{{ employee.clearance.id  ? getClearanceLabel(employee.clearance.id) : 'Clearance Level' }}</option>
+          <select [(ngModel)]="employee.clearance.clearanceLevel" name="clearanceId">
+            <option value="" disabled selected hidden>{{ employee.clearance.clearanceLevel  ? getClearanceLabel(employee.clearance.clearanceLevel) : 'Clearance Level' }}</option>
             <option value="1">Top Secret</option>
             <option value="2">Secret</option>
             <option value="3">Confidential</option>
