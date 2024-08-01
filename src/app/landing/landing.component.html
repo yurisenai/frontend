@@ -10,10 +10,10 @@
     <div class="view-container" *ngIf="isProjectView">
       <button class="toggle-button" (click)="toggleView()">Show Agents</button>
       <div class="project-card" *ngFor="let project of projects">
-        <h3>{{ project.name }}</h3>
+        <h3>{{ project.codename }}</h3>
         <div class="status-bar">
-          <div class="bar staff" [style.width.%]="project.staff.count">Staff Count</div>
-          <div class="bar completion" [style.width.%]="project.completion.percent">Completion Percentage</div>
+          <div class="bar staff" [style.width.%]="project.personnel">Staff Count</div>
+          <div class="bar completion" [style.width.%]="project.personnel">Completion Percentage</div>
         </div>
       </div>
     </div>
@@ -24,11 +24,11 @@
 
         <div class="left-container">
           <div>
-            <img [src]="employee.pfp" alt="Profile Picture" class="pfp"/>
+            <img [src]="employee.img" alt="Profile Picture" class="pfp"/>
           </div>
 
           <div class="employee-name">
-            {{ employee.name }}
+            {{ employee.firstName }}
           </div>
         </div>
         <span> {{ employee.location }}</span>
