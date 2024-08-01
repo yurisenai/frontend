@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Project } from '../models/project';
+import { Project, Clearance } from '../models/project';
 import { ProjectCardComponent } from './project-card/project-card.component';
 import { HttpService } from '../services/http.service';
 import { CommonModule } from '@angular/common';
@@ -9,18 +9,16 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, ProjectCardComponent],
   templateUrl: './project.component.html',
-  styleUrl: './project.component.scss'
+  styleUrls: ['./project.component.scss']
 })
 export class ProjectComponent {
-
   selectedProject: Project | null = null;
-
   projects: Project[] = [
     new Project(
       1,
       'Reverse Engineer Ship',
       'Analyze alien technology and recreate it.',
-      'Top Secret',
+      new Clearance(1, 'Top Secret', []),
       'High',
       50,
       '',
@@ -30,7 +28,7 @@ export class ProjectComponent {
       2,
       'Alien Translation System',
       'Analyze alien language and translate it.',
-      'Secret',
+      new Clearance(2, 'Secret', []),
       'Middle',
       35,
       '',
@@ -40,7 +38,7 @@ export class ProjectComponent {
       3,
       'Test Laser Firearms',
       'Understand the mechanisms of alien technology.',
-      'Top Secret',
+      new Clearance(3, 'Top Secret', []),
       'Middle',
       20,
       '',
@@ -48,7 +46,7 @@ export class ProjectComponent {
     )
   ];
 
-  constructor(private httpService: HttpService){
+  constructor(private httpService: HttpService) {
     this.getAllProjects();
   }
 
@@ -62,7 +60,7 @@ export class ProjectComponent {
             item.id,
             item.codename,
             item.description,
-            item.minClearance,
+            new Clearance(item.minClearance.id, item.minClearance.clearance, item.minClearance.employees),  
             item.priority,
             item.personnel,
             item.img,
@@ -81,7 +79,7 @@ export class ProjectComponent {
         //   // item.id,
         //   // item.codename,
         //   // item.description,
-        //   // item.minClearance,
+        //   // item.minClearance as Clearance,  
         //   // item.priority,
         //   // item.personnel,
         //   // item.img,
@@ -92,24 +90,33 @@ export class ProjectComponent {
   }
 
   createProject(){
-    this.httpService.createEmployee().subscribe(data=>{
+    this.httpService.createProject().subscribe(data=>{
       this.getAllProjects();
     });
   }
 
   updateProject(project: Project) {
+    const clearanceObj = new Clearance(
+        project.minClearance.id, 
+        project.minClearance.clearance, 
+        project.minClearance.employees
+    );
+
     this.httpService.updateProject(
-      project.id,
-      project.codename,
-      project.description,
-      project.minClearance,
-      project.priority,
-      project.personnel,
-      project.img,
-      project.employees).subscribe(response => {
+        project.id,
+        project.codename,
+        project.description,
+        clearanceObj,  
+        project.priority,
+        project.personnel,
+        project.img,
+        project.employees
+    ).subscribe(response => {
         this.getAllProjects();
-      });
-  }
+    });
+}
+
+
 
   deleteProject(id: number) {
     this.httpService.deleteProject(id).subscribe(data => {
@@ -117,8 +124,7 @@ export class ProjectComponent {
     });
   }
 
-  processDeleteEvent(id: number){
+  processDeleteEvent(id: number) {
     this.deleteProject(id);
   }
-
 }

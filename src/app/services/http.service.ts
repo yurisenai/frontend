@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { min, switchMap } from 'rxjs';
+import { min, Observable, switchMap } from 'rxjs';
 import { Employee } from '../models/employee';
 import { Project } from '../models/project';
 import { Clearance } from '../models/clearance';
@@ -75,7 +75,7 @@ export class HttpService {
     return this.http.get(this.url + 'project/' + id, {observe:'response'})
   }
 
-  createProject() {
+  createProject(): Observable<any> {
     return this.http.get(this.url + 'project', { observe: 'response' }).pipe(
       switchMap(response => {
         const projects = response.body as any[];
@@ -87,8 +87,12 @@ export class HttpService {
         });
         const newProject = {
           id: highestId + 1,
-          name: "New Project",
+          codename: "New Project",
           description: "New Project Description",
+          minClearance: new Clearance(0, 'Top Secret', []), 
+          priority: 'Low',
+          personnel: 0,
+          img: '',
           employees: []
         };
         return this.http.post(this.url + 'project', newProject, { observe: 'response' });
@@ -96,13 +100,13 @@ export class HttpService {
     );
   }
 
-  updateProject(id: number, codename: string, description: string, minClearance:string, priority:string ,personnel:number,img:string, employees:any[]) {
+  updateProject(id: number, codename: string, description: string, minClearance: Clearance, priority: string, personnel: number, img: string, employees: any[]) {
     return this.http.put(this.url + 'project/' + id,
-      new Project(id, codename, description,minClearance,priority,personnel,img, employees), { observe: 'response' });
+      new Project(id, codename, description, minClearance, priority, personnel, img, employees), { observe: 'response' });
   }
+  
 
-  deleteProject(id:number){
-    return this.http.delete(this.url + 'project/' + id,
-                            {observe:'response'})
+  deleteProject(id: number): Observable<any> {
+    return this.http.delete(this.url + 'project/' + id, { observe: 'response' });
   }
 }
