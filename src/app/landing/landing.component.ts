@@ -3,10 +3,9 @@ import { MapsComponent } from '../maps/maps.component';
 import { NgFor, NgIf } from '@angular/common';
 import { Employee } from '../models/employee';
 import { HttpService } from '../services/http.service';
-<<<<<<< HEAD
-=======
 import { Clearance, Project } from '../models/project';
->>>>>>> 49b3b6948783cd3b04fe0d2d20f2cd3c774a2831
+
+
 
 
 @Component({
@@ -19,15 +18,6 @@ import { Clearance, Project } from '../models/project';
 export class LandingComponent {
   isProjectView = true;
 
-<<<<<<< HEAD
-  // employees = [
-  //   { pfp: "./assets/images/person3.png", name: 'James Brown', location: 'New York' },
-  //   { pfp: "./assets/images/person2.png", name: 'Sophia Martinez', location: 'Los Angeles' },
-  //   { pfp: "./assets/images/person1.png", name: 'Alyssa Johnson', location: 'Off World' },
-  //   { pfp: "./assets/images/person4.png", name: 'Michael Anderson', location: 'On Base' },
-
-  // ];
-=======
   employees: Employee[] = [];
 
   constructor(private httpService: HttpService){
@@ -49,7 +39,7 @@ export class LandingComponent {
       }
     });
   }
->>>>>>> 49b3b6948783cd3b04fe0d2d20f2cd3c774a2831
+
 
   toggleView() {
     this.isProjectView = !this.isProjectView;
@@ -89,41 +79,25 @@ export class LandingComponent {
     )
   ];
 
-<<<<<<< HEAD
-  employees: Employee[] = [];
 
-  constructor(private httpService: HttpService){
-    this.getAllEmployees();
-  }
 
-  getAllEmployees(){
-    this.httpService.getAllEmployees().subscribe(response => {
-      if (response && response.body) {
-        this.employees = [];
-
-        let body: any = response.body || {}
-        for (let item of body) {
-          this.employees.push(new Employee(item.id, item.firstName,
-             item.lastName,item.email, item.phoneNumber, item.occupation,item.clearance,item.img, item.projects,item.location));
-
-=======
   getAllProjects() {
     this.httpService.getAllProjects().subscribe(response => {
       if (response && response.body) {
-        this.projects = []; 
+        this.projects = [];
         let body: any = response.body || [];
         for (let item of body) {
           this.projects.push(new Project(
             item.id,
             item.codename,
             item.description,
-            new Clearance(item.minClearance.id, item.minClearance.clearance, item.minClearance.employees),  
+            new Clearance(item.minClearance.id, item.minClearance.clearance, item.minClearance.employees),
             item.priority,
             item.personnel,
             item.img,
             item.employees,
           ));
->>>>>>> 49b3b6948783cd3b04fe0d2d20f2cd3c774a2831
+
         }
       }
     });

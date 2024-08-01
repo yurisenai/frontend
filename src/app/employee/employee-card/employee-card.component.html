@@ -49,11 +49,11 @@
               <input type="text" class="employee-name" name="holderFirstName" [(ngModel)] = "holderFirstName" [placeholder]="employee.firstName || 'First Name'">
               <input type="text" class="employee-lastname"  name="holderLastName" [(ngModel)] = "holderLastName" [placeholder]="employee.lastName || 'Last Name'">
             </div>
-            <input type="text" class="employee-department" [placeholder]="employee.occupation || 'Occupation'">
-            <input type="text" class="employee-id"  [placeholder]="employee.id || 'ID'">
-            <input type="text" class="employee-department"  [placeholder]="employee.phoneNumber || 'Phone Number'">
-            <input type="text" class="employee-id"  [placeholder]="employee.email || 'Email'">
-            <input type="text" class="employee-id"  [placeholder]="employee.img || 'Image URL'">
+            <input type="text" class="employee-department"  name="holderOccupation" [(ngModel)] = "holderOccupation" [placeholder]="employee.occupation || 'Occupation'">
+            <input type="text" class="employee-id"  name="holderId" [(ngModel)] = "holderId" [placeholder]="employee.id || 'ID'">
+            <input type="text" class="employee-department"  name="holderPhoneNumber"[(ngModel)] = "holderPhoneNumber" [placeholder]="employee.phoneNumber || 'Phone Number'">
+            <input type="text" class="employee-id"  name="holderEmail" [(ngModel)] = "holderEmail"  [placeholder]="employee.email || 'Email'">
+            <input type="text" class="employee-img"  name="holderImg" [(ngModel)] = "holderImg" [placeholder]="employee.img || 'Image URL'">
           </div>
         </div>
         <div class="action-icons">
@@ -70,8 +70,8 @@
           </div>
         </div>
         <div class="card-footer">
-          <select [(ngModel)]="employee.clearance.clearanceLevel" name="clearanceId">
-            <option value="" disabled selected hidden>{{ employee.clearance.clearanceLevel  ? getClearanceLabel(employee.clearance.clearanceLevel) : 'Clearance Level' }}</option>
+          <select [(ngModel)]="holderClear" name="holderClear">
+            <option value="" disabled selected hidden>{{ holderClear  ? getClearanceLabel(holderClear) : 'Clearance Level' }}</option>
             <option value="1">Top Secret</option>
             <option value="2">Secret</option>
             <option value="3">Confidential</option>
