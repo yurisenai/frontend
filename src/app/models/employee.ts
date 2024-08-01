@@ -1,4 +1,6 @@
 import { Project } from "./project";
+import { Clearance } from "./clearance";
+import { Location } from "./location";
 
 export class Employee {
     id: number;
@@ -7,13 +9,15 @@ export class Employee {
     email: string;
     phoneNumber: string;
     occupation:string;
-    clearance: string;
+    clearance: Clearance;
     img :string;
     projects: Project;
+    location: Location;
+
 
     constructor(id: number, firstName: string, lastName: string,
         email: string, phoneNumber: string,
-        occupation:string,clearance:string,img:string, projects: Project){
+        occupation:string,clearance: Clearance ,img:string, projects: Project, location: Location){
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,5 +27,6 @@ export class Employee {
         this.clearance = clearance;
         this.img =img;
         this.projects = projects;
+        this.location = location;
     }
 }
