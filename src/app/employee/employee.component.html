@@ -1,14 +1,14 @@
 
 <div id="table-header">
-    <input type="text" placeholder=" Find Employee..." class="search-input p-inputtext">
+    <input type="text" placeholder=" Find Agent..." class="search-input p-inputtext">
     <i class="fas fa-plus" (click)="createEmployee()"><strong>+</strong></i>
 </div>
 
 
-<div class="card-container">    
+<div class="card-container">
     @for (employee of employees; track $index){
         <app-employee-card [employee]="employee"
-        (updateEmployeeEvent)="updateEmployee($event)"  
+        (updateEmployeeEvent)="updateEmployee($event)"
         (deleteEmployeeEvent)="processDeleteEvent($event)"></app-employee-card>
     }
 </div>

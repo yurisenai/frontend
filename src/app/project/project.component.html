@@ -1,10 +1,10 @@
 
 <div id="table-header">
-    <input type="text" placeholder=" Find Project..." class="search-input p-inputtext">
+    <input type="text" placeholder=" Find Mission..." class="search-input p-inputtext">
     <i class="fas fa-plus" (click)="createProject()"><strong>+</strong></i>
 </div>
 
-<div class="card-container">    
+<div class="card-container">
     @for (project of projects; track $index){
         <app-project-card
             [project]="project"
