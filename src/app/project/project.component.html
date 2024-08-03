@@ -1,16 +1,20 @@
-
 <div id="table-header">
-    <input type="text" placeholder=" Find Project..." class="search-input p-inputtext">
+    <input type="text" placeholder="Find Project..." class="search-input p-inputtext"
+           [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange()">
     <i class="fas fa-plus" (click)="createProject()"><strong>+</strong></i>
-</div>
-
-<div class="card-container">    
-    @for (project of projects; track $index){
-        <app-project-card
-            [project]="project"
-            (updateProjectEvent)="updateProject($event)"
-            (deleteProjectEvent)="processDeleteEvent($event)">
-        </app-project-card>
-
-    }
-</div>
+  </div>
+  
+  <div class="card-container">    
+    <app-project-card
+      *ngFor="let project of filteredProjects"
+      [project]="project"
+      (updateProjectEvent)="updateProject($event)"
+      (deleteProjectEvent)="processDeleteEvent($event)">
+    </app-project-card>
+  </div>
+  
+  
+  
+  
+  
+  

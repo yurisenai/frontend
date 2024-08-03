@@ -65,48 +65,26 @@ export class HttpService {
   }
 
 
-
-  //PROJECTS
-  getAllProjects(){
-    return this.http.get(this.url + 'project', { observe : 'response'});
+  private urlProj = 'http://localhost:8080/project';
+  // PROJECTS
+  getAllProjects(): Observable<Project[]> {
+    return this.http.get<Project[]>(this.urlProj);
   }
 
-  getProjectById(id:number){
-    return this.http.get(this.url + 'project/' + id, {observe:'response'})
+  getProjectById(id: number): Observable<Project> {
+    return this.http.get<Project>(`${this.urlProj}/${id}`);
   }
 
-  createProject(): Observable<any> {
-    return this.http.get(this.url + 'project', { observe: 'response' }).pipe(
-      switchMap(response => {
-        const projects = response.body as any[];
-        let highestId = 0;
-        projects.forEach(project => {
-          if (project.id > highestId) {
-            highestId = project.id;
-          }
-        });
-        const newProject = {
-          id: highestId + 1,
-          codename: "New Project",
-          description: "New Project Description",
-          minClearance: new Clearance(0, 'Top Secret', []),
-          priority: 'Low',
-          personnel: 0,
-          img: '',
-          employees: []
-        };
-        return this.http.post(this.url + 'project', newProject, { observe: 'response' });
-      })
-    );
+  createProject(project: Project): Observable<Project> {
+    return this.http.post<Project>(this.urlProj, project); 
   }
-
-  updateProject(id: number, codename: string, description: string, minClearance: Clearance, priority: string, personnel: number, img: string, employees: any[]) {
-    return this.http.put(this.url + 'project/' + id,
-      new Project(id, codename, description, minClearance, priority, personnel, img, employees), { observe: 'response' });
+  
+  
+  updateProject(project: Project): Observable<Project> {
+    return this.http.put<Project>(`${this.urlProj}/${project.id}`, project);
   }
-
 
   deleteProject(id: number): Observable<any> {
-    return this.http.delete(this.url + 'project/' + id, { observe: 'response' });
+    return this.http.delete(`${this.urlProj}/${id}`);
   }
 }

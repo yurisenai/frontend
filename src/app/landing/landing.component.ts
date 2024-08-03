@@ -43,56 +43,24 @@ export class LandingComponent {
   }
 
 
-  projects: Project[] = [
-    new Project(
-      1,
-      'Reverse Engineer Ship',
-      'Analyze alien technology and recreate it.',
-      new Clearance(1, 'Top Secret', []),
-      'High',
-      50,
-      '',
-      [],
-    ),
-    new Project(
-      2,
-      'Alien Translation System',
-      'Analyze alien language and translate it.',
-      new Clearance(2, 'Secret', []),
-      'Middle',
-      35,
-      '',
-      [],
-    ),
-    new Project(
-      3,
-      'Test Laser Firearms',
-      'Understand the mechanisms of alien technology.',
-      new Clearance(3, 'Top Secret', []),
-      'Middle',
-      20,
-      '',
-      [],
-    )
-  ];
+  projects: Project[] = [];
 
   getAllProjects() {
     this.httpService.getAllProjects().subscribe(response => {
-      if (response && response.body) {
-        this.projects = []; 
-        let body: any = response.body || [];
-        for (let item of body) {
-          this.projects.push(new Project(
-            item.id,
-            item.codename,
-            item.description,
-            new Clearance(item.minClearance.id, item.minClearance.clearance, item.minClearance.employees),  
-            item.priority,
-            item.personnel,
-            item.img,
-            item.employees,
-          ));
-        }
+      this.projects = [];
+  
+      let body: any = response || [];  // no .body here
+      for (let item of body) {
+        this.projects.push(new Project(
+          item.id,
+          item.codename,
+          item.description,
+          new Clearance(item.minClearance.id, item.minClearance.clearance, item.minClearance.employees),
+          item.priority,
+          item.personnel,
+          item.img,
+          item.employees
+        ));
       }
     });
   }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { Project, Clearance } from '../../models/project';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -10,56 +10,44 @@ import { CommonModule } from '@angular/common';
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.scss']
 })
-export class ProjectCardComponent {
-
-  projectId: number = 0;
-  projectcodeName: string = "";
-  projectDescription: string = "";
-  projectminClearance: Clearance = new Clearance();  
-  projectPriority: string = "";
-  projectPersonnel: number = 0;
-  projectImg: string = "";
-  projectEmployees: any[] = [];
-
+export class ProjectCardComponent implements OnChanges {
   @Input() project: Project = new Project(0, '', '', new Clearance(), '', 0, '', []);  
-
   @Output() deleteProjectEvent = new EventEmitter<number>();
   @Output() updateProjectEvent = new EventEmitter<Project>();
   @Output() viewProjectEvent = new EventEmitter<Project>();
 
-  constructor() {
-    this.initializeProjectFields();
+  editMode: boolean = false;
+  originalProject: Project = { ...this.project };  
+
+  ngOnChanges() {
+    this.originalProject = { ...this.project };
   }
 
-  initializeProjectFields() {
-    this.projectId = this.project.id;
-    this.projectcodeName = this.project.codename;
-    this.projectDescription = this.project.description;
-    this.projectminClearance = this.project.minClearance;  
-    this.projectPriority = this.project.priority;
-    this.projectPersonnel = this.project.personnel;
-    this.projectImg = this.project.img;
-    this.projectEmployees = this.project.employees;
+  toggleEditMode() {
+    this.editMode = !this.editMode;
+    this.originalProject = { ...this.project };
   }
 
-  viewThisProject() {
-    this.viewProjectEvent.emit(this.project);
+  saveUpdate() {
+    this.editMode = false;
+    this.updateProjectEvent.emit(this.project);  
   }
-
-  updateProject() {
-    this.updateProjectEvent.emit(new Project(
-      this.projectId,
-      this.projectcodeName,
-      this.projectDescription,
-      this.projectminClearance, 
-      this.projectPriority,
-      this.projectPersonnel,
-      this.projectImg,
-      this.projectEmployees
-    ));
+  
+  cancelUpdate() {
+    this.project = { ...this.originalProject };
+    this.editMode = false;
   }
 
   deleteThisProject() {
     this.deleteProjectEvent.emit(this.project.id);
   }
+
+  viewThisProject() {
+    this.viewProjectEvent.emit(this.project);
+  } 
+
+  updateProject() {
+    this.updateProjectEvent.emit(this.project);
+  }
+  
 }
