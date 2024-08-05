@@ -47,7 +47,7 @@ export class HttpService {
           occupation: "Occupation" ,
           clearance: new Clearance(3, '',[]),
           location: new Location(1,'','','',0,0,[]),
-          projects: new Project(5,'','',new Clearance(0,'',[]),'',0,'',[])
+          projects: new Project(5,'','',new Clearance(0,'',[]),'',[])
         };
         return this.http.post(this.url + 'employee', newEmployee, { observe: 'response' });
       })
@@ -58,7 +58,7 @@ export class HttpService {
                  occupation:string, clearId:number, img:string, projId:number,localId:number) {
     return this.http.put(this.url + 'employee/' + id,
       new Employee(id, firstName, lastName,email,phoneNumber, occupation,new Clearance(clearId,'',[]),img,
-         new Project(projId,'','',new Clearance(0,'',[]),'',0,'',[]), new Location(localId,'','','',0,0,[])), { observe: 'response' });
+         new Project(projId,'','',new Clearance(0,'',[]),'',[]), new Location(localId,'','','',0,0,[])), { observe: 'response' });
   }
 
   deleteEmployee(id:number){
@@ -78,10 +78,10 @@ export class HttpService {
   }
 
   createProject(project: Project): Observable<Project> {
-    return this.http.post<Project>(this.urlProj, project); 
+    return this.http.post<Project>(`${this.urlProj}`, project);
   }
-  
-  
+
+
   updateProject(project: Project): Observable<Project> {
     return this.http.put<Project>(`${this.urlProj}/${project.id}`, project);
   }

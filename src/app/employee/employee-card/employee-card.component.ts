@@ -41,7 +41,7 @@ export class EmployeeCardComponent {
   }
 
   @Input() employee: Employee = new Employee(0,'','',
-    '','','',new Clearance(0,'',[]),'', new Project(0,'','',new Clearance(0,'',[]),'',0,'',[]), new Location(0,'','','',0,0,[]))
+    '','','',new Clearance(0,'',[]),'', new Project(0,'','',new Clearance(0,'',[]),'',[]), new Location(0,'','','',0,0,[]))
 
   @Output() deleteEmployeeEvent = new EventEmitter<number>();
   @Output() updateEmployeeEvent = new EventEmitter<Employee>();

@@ -1,16 +1,24 @@
 import { Clearance } from "./clearance";
 
-export class Project {
-  constructor(
-    public id: number,
-    public codename: string,
-    public description: string,
-    public minClearance: Clearance,
-    public priority: string,
-    public personnel: number,
-    public img: string,
-    public employees: any[] 
-  ) {}
-}
 
-export { Clearance };
+export class Project {
+
+  id: number;
+  codename: string;
+  description: string;
+  minClearance: Clearance;
+  img: string;
+  employees: any[];
+
+  constructor(id: number, codename: string, description: string,
+      minClearance: Clearance, img: string,
+       employees: any[]){
+      this.id = id;
+      this.codename = codename;
+      this.description = description;
+      this.minClearance = minClearance;
+      this.img = img;
+      this.employees = employees;
+  }
+
+}

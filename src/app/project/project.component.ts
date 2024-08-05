@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { ProjectCardComponent } from './project-card/project-card.component';
-import { Clearance, Project } from '../models/project';
+import { Project } from '../models/project';
 import { HttpService } from '../services/http.service';
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Clearance } from '../models/clearance';
 
 @Component({
   selector: 'app-project',
@@ -25,31 +26,29 @@ export class ProjectComponent {
   getAllProjects() {
     this.httpService.getAllProjects().subscribe(projects => {
       this.projects = projects;
-      this.filteredProjects = projects; 
+      this.filteredProjects = projects;
     });
   }
 
   createProject() {
     const newProject = new Project(
-      0,  
+      0,
       'New Project',
       'New Project Description',
       new Clearance(0, 'Top Secret', []),
       'Low',
-      0,
-      '',
       []
     );
 
     this.filteredProjects.push(newProject);
-  
+
     this.httpService.createProject(newProject).subscribe(
       (savedProject: Project) => {
         const index = this.filteredProjects.indexOf(newProject);
         if (index > -1) {
           this.filteredProjects[index] = savedProject;
         }
-        this.getAllProjects(); 
+        this.getAllProjects();
       },
       (error) => {
         console.error('Error creating project:', error);
@@ -66,7 +65,7 @@ export class ProjectComponent {
   updateProject(updatedProject: Project) {
     console.log('Updating Project:', updatedProject);
     this.httpService.updateProject(updatedProject).subscribe(() => {
-      this.getAllProjects();  
+      this.getAllProjects();
     });
   }
 
@@ -84,6 +83,6 @@ export class ProjectComponent {
     this.filteredProjects = this.projects.filter(project =>
       project.codename.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-    console.log('Filtered Projects:', this.filteredProjects);  
+    console.log('Filtered Projects:', this.filteredProjects);
   }
 }

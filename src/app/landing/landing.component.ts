@@ -3,7 +3,8 @@ import { MapsComponent } from '../maps/maps.component';
 import { NgFor, NgIf } from '@angular/common';
 import { Employee } from '../models/employee';
 import { HttpService } from '../services/http.service';
-import { Clearance, Project } from '../models/project';
+import { Project } from '../models/project';
+import { Clearance } from '../models/clearance';
 
 @Component({
   selector: 'app-landing',
@@ -53,12 +54,10 @@ export class LandingComponent {
         item.codename,
         item.description,
         new Clearance(item.minClearance.clearanceLevel, item.minClearance.clearanceType, item.minClearance.employees),
-        item.priority,
-        item.personnel,
         item.img,
         item.employees
       ));
     });
   }
-  
+
 }

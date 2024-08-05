@@ -1,8 +1,9 @@
 
 import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
-import { Project, Clearance } from '../../models/project';
+import { Project } from '../../models/project';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Clearance } from '../../models/clearance';
 
 @Component({
   selector: 'app-project-card',
@@ -12,13 +13,13 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./project-card.component.scss']
 })
 export class ProjectCardComponent implements OnChanges {
-  @Input() project: Project = new Project(0, '', '', new Clearance(), '', 0, '', []);  
+  @Input() project: Project = new Project(0, '', '', new Clearance(), '',[]);
   @Output() deleteProjectEvent = new EventEmitter<number>();
   @Output() updateProjectEvent = new EventEmitter<Project>();
   @Output() viewProjectEvent = new EventEmitter<Project>();
 
   editMode: boolean = false;
-  originalProject: Project = { ...this.project };  
+  originalProject: Project = { ...this.project };
 
   ngOnChanges() {
     this.originalProject = { ...this.project };
@@ -31,9 +32,9 @@ export class ProjectCardComponent implements OnChanges {
 
   saveUpdate() {
     this.editMode = false;
-    this.updateProjectEvent.emit(this.project);  
+    this.updateProjectEvent.emit(this.project);
   }
-  
+
   cancelUpdate() {
     this.project = { ...this.originalProject };
     this.editMode = false;
@@ -45,10 +46,10 @@ export class ProjectCardComponent implements OnChanges {
 
   viewThisProject() {
     this.viewProjectEvent.emit(this.project);
-  } 
+  }
 
   updateProject() {
     this.updateProjectEvent.emit(this.project);
   }
-  
+
 }
