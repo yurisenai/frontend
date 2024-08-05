@@ -47,22 +47,26 @@ export class LandingComponent {
 
   getAllProjects() {
     this.httpService.getAllProjects().subscribe(response => {
-      this.projects = [];
+      if (response) {
+        this.projects = [];
   
-      let body: any = response || [];  // no .body here
-      for (let item of body) {
-        this.projects.push(new Project(
-          item.id,
-          item.codename,
-          item.description,
-          new Clearance(item.minClearance.id, item.minClearance.clearance, item.minClearance.employees),
-          item.priority,
-          item.personnel,
-          item.img,
-          item.employees
-        ));
+        let body: any = response || [];  
+        for (let item of body) {
+          this.projects.push(new Project(
+            item.id,
+            item.codename,
+            item.description,
+            new Clearance(item.minClearance.id, item.minClearance.clearance, item.minClearance.employees),
+            item.priority,
+            item.personnel,
+            item.img,
+            item.employees
+          ));
+        }
       }
     });
   }
+  
+  
 
 }
