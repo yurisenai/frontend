@@ -23,9 +23,29 @@ export class ProjectComponent {
   }
 
   getAllProjects() {
+
     this.httpService.getAllProjects().subscribe(projects => {
       this.projects = projects;
       this.filteredProjects = projects; 
+
+    this.httpService.getAllProjects().subscribe(response => {
+      if (response && response.body) {
+        this.projects = [];
+        let body: any = response.body || [];
+        for (let item of body) {
+          this.projects.push(new Project(
+            item.id,
+            item.codename,
+            item.description,
+            new Clearance(item.minClearance.id, item.minClearance.clearance, item.minClearance.employees),
+            item.priority,
+            item.personnel,
+            item.img,
+            item.employees
+          ));
+        }
+      }
+
     });
   }
   
@@ -53,6 +73,22 @@ export class ProjectComponent {
       },
       (error) => {
         console.error('Error creating project:', error);
+
+  getProjectById(id: number) {
+    this.httpService.getProjectById(id).subscribe(response => {
+      if (response && response.body) {
+        let item = response.body;
+        // this.selectedProject = new Project(
+        //   // item.id,
+        //   // item.codename,
+        //   // item.description,
+        //   // item.minClearance as Clearance,
+        //   // item.priority,
+        //   // item.personnel,
+        //   // item.img,
+        //   // item.employees
+        // );
+
       }
     );
   }
@@ -64,9 +100,29 @@ export class ProjectComponent {
     });
   }
 
+
   saveProject() {
     if (this.projectToEdit) {
       this.httpService.updateProject(this.projectToEdit).subscribe(() => {
+
+  updateProject(project: Project) {
+    const clearanceObj = new Clearance(
+        project.minClearance.clearanceLevel,
+        project.minClearance.clearanceType,
+        project.minClearance.employees
+    );
+
+    this.httpService.updateProject(
+        project.id,
+        project.codename,
+        project.description,
+        clearanceObj,
+        project.priority,
+        project.personnel,
+        project.img,
+        project.employees
+    ).subscribe(response => {
+
         this.getAllProjects();
         this.projectToEdit = null;  
       });

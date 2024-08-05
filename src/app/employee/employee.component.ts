@@ -57,7 +57,7 @@ export class EmployeeComponent {
       employee.email,
       employee.phoneNumber,
       employee.occupation,
-      employee.clearance.id,
+      employee.clearance.clearanceLevel,
       employee.img,
       employee.projects.id,
       employee.location.id).subscribe(response => {

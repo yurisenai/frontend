@@ -6,6 +6,8 @@ import { HttpService } from '../services/http.service';
 import { Clearance, Project } from '../models/project';
 
 
+
+
 @Component({
   selector: 'app-landing',
   standalone: true,
@@ -38,6 +40,7 @@ export class LandingComponent {
     });
   }
 
+
   toggleView() {
     this.isProjectView = !this.isProjectView;
   }
@@ -45,12 +48,20 @@ export class LandingComponent {
 
   projects: Project[] = [];
 
+
+
   getAllProjects() {
     this.httpService.getAllProjects().subscribe(response => {
+
       if (response) {
         this.projects = [];
   
         let body: any = response || [];  
+
+      if (response && response.body) {
+        this.projects = [];
+        let body: any = response.body || [];
+
         for (let item of body) {
           this.projects.push(new Project(
             item.id,
@@ -62,6 +73,7 @@ export class LandingComponent {
             item.img,
             item.employees
           ));
+
         }
       }
     });

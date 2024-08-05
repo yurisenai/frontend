@@ -43,9 +43,10 @@ export class HttpService {
           lastName: "Last Name",
           email:"Email",
           phoneNumber:"Phone Number",
-          occupation: 1 ,
-          Location: 1,
-          projects: 1
+          occupation: "Occupation" ,
+          clearance: new Clearance(3, '',[]),
+          location: new Location(1,'','','',0,0,[]),
+          projects: new Project(5,'','',new Clearance(0,'',[]),'',0,'',[])
         };
         return this.http.post(this.url + 'employee', newEmployee, { observe: 'response' });
       })

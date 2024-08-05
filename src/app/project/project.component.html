@@ -1,4 +1,5 @@
 <div id="table-header">
+
     <input type="text" placeholder="Find Project..." class="search-input p-inputtext"
            [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange()">
     <i class="fas fa-plus" (click)="createProject()"><strong>+</strong></i>
@@ -13,8 +14,18 @@
     </app-project-card>
   </div>
   
-  
-  
-  
-  
-  
+    <input type="text" placeholder=" Find Mission..." class="search-input p-inputtext">
+    <i class="fas fa-plus" (click)="createProject()"><strong>+</strong></i>
+</div>
+
+<div class="card-container">
+    @for (project of projects; track $index){
+        <app-project-card
+            [project]="project"
+            (updateProjectEvent)="updateProject($event)"
+            (deleteProjectEvent)="processDeleteEvent($event)">
+        </app-project-card>
+
+    }
+</div>
+
