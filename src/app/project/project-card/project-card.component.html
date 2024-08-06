@@ -9,7 +9,6 @@
       <p>{{ project.description }}</p>
       <p>Minimum Clearance: {{ getClearanceLabel(project.minClearance.clearanceLevel) }}</p>
       
-      <!-- Display the list of employees associated with the project -->
       <div class="employee-list">
         <h4>Employees:</h4>
         <div *ngFor="let emp of project.employees">

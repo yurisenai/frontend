@@ -90,7 +90,8 @@ export class ProjectComponent {
     this.filteredProjects = this.projects.filter(project =>
       project.codename.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-
-    console.log('Filtered Projects:', this.filteredProjects);
   }
+  
+
+    
 }
