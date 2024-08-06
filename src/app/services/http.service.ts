@@ -123,10 +123,6 @@ export class HttpService {
       observe: 'response'
     });
   }
-  
-  
-  
-
 
   deleteProject(id: number): Observable<any> {
     return this.http.delete(`${this.urlProj}/${id}`);

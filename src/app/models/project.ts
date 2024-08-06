@@ -1,4 +1,5 @@
 import { Clearance } from "./clearance";
+import { Employee } from "./employee";
 
 
 export class Project {
@@ -8,7 +9,7 @@ export class Project {
   description: string;
   minClearance: Clearance;
   img: string;
-  employees: any[];
+  employees: Employee[];
 
   constructor(id: number, codename: string, description: string,
       minClearance: Clearance, img: string,

@@ -1,10 +1,10 @@
+
 import { Component } from '@angular/core';
 import { ProjectCardComponent } from './project-card/project-card.component';
-import { Project } from '../models/project';
+import { Clearance, Project } from '../models/project';
 import { HttpService } from '../services/http.service';
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Clearance } from '../models/clearance';
 
 @Component({
   selector: 'app-project',
@@ -15,6 +15,7 @@ import { Clearance } from '../models/clearance';
 })
 export class ProjectComponent {
   projects: Project[] = [];
+  projectToEdit: Project | null = null;
   filteredProjects: Project[] = [];
   searchTerm: string = '';
 
@@ -23,50 +24,50 @@ export class ProjectComponent {
   }
 
   getAllProjects() {
-    this.httpService.getAllProjects().subscribe(response => {
-      if (response) {
-        this.projects = response.map((item: any) => 
-          new Project(
-            item.id,
-            item.codename,
-            item.description,
-            new Clearance(item.minClearance.clearanceLevel, item.minClearance.description, []),
-            item.img,
-            item.employees
-          )
-        );
-        this.filteredProjects = this.projects;
-      }
+    this.httpService.getAllProjects().subscribe(projects => {
+      this.projects = projects;
+      this.filteredProjects = projects; 
     });
   }
 
   createProject() {
     const newProject = new Project(
-      0,
+      0,  
       'New Project',
       'New Project Description',
-      new Clearance(1, 'Confidential', []),
+      new Clearance(0, 'Top Secret', []),
+      'Low',
+      0,
       '',
       []
     );
 
-    this.httpService.createProject(newProject).subscribe(() => {
-      this.getAllProjects();
+    this.filteredProjects.push(newProject);
+  
+    this.httpService.createProject(newProject).subscribe(
+      (savedProject: Project) => {
+        const index = this.filteredProjects.indexOf(newProject);
+        if (index > -1) {
+          this.filteredProjects[index] = savedProject;
+        }
+        this.getAllProjects(); 
+      },
+      (error) => {
+        console.error('Error creating project:', error);
+      }
+    );
+  }
+
+  getProjectById(id: number) {
+    this.httpService.getProjectById(id).subscribe(response => {
+      // Handle the response as needed
     });
   }
 
-  updateProject(project: Project) {
-    const employeeIds = project.employees.map(emp => emp.id);
-
-    this.httpService.updateProject(
-      project.id,
-      project.codename,
-      project.description,
-      project.minClearance.clearanceLevel,
-      project.img,
-      employeeIds
-    ).subscribe(() => {
-      this.getAllProjects();
+  updateProject(updatedProject: Project) {
+    console.log('Updating Project:', updatedProject);
+    this.httpService.updateProject(updatedProject).subscribe(() => {
+      this.getAllProjects();  
     });
   }
 
@@ -84,7 +85,6 @@ export class ProjectComponent {
     this.filteredProjects = this.projects.filter(project =>
       project.codename.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-
-    console.log('Filtered Projects:', this.filteredProjects);
+    console.log('Filtered Projects:', this.filteredProjects);  
   }
 }

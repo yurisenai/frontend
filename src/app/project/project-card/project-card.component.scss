@@ -66,3 +66,31 @@
     z-index: 1;
     margin-top: -20%;
 }
+
+.employee-dropdown {
+    border: 1px solid #ccc;
+    background-color: white;
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: scroll;
+}
+  
+.employee-dropdown div {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+}
+  
+.employee-dropdown div:hover {
+    background-color: #f0f0f0;
+}
+  
+.employee-photo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
