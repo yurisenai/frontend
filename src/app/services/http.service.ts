@@ -20,6 +20,7 @@ export class HttpService {
 
 
   //EMPLOYEES
+
   getAllEmployees(){
     return this.http.get(this.url + 'employee', { observe : 'response'});
   }
@@ -49,6 +50,9 @@ export class HttpService {
           location: new Location(1,'','','',0,0,[]),
           projects: new Project(5, '', '', new Clearance(0, '', []), '', [])
         };
+
+        console.log('New Employee initialized:', newEmployee);
+
         return this.http.post(this.url + 'employee', newEmployee, { observe: 'response' });
       })
     );
@@ -64,8 +68,8 @@ export class HttpService {
       occupation: occupation,
       clearance: new Clearance(clearId, '', []),
       img: img,
-      projects: [projId],
-      location: new Location(localId, '', '', '', 0, 0, []) 
+      projects: new Project(5, '', '', new Clearance(0, '', []), '', []),
+      location: new Location(localId, '', '', '', 0, 0, [])
     },
     {
       observe: 'response'
@@ -110,19 +114,24 @@ export class HttpService {
       })
     );
   }
-  
+
   updateProject(id: number, codename: string, description: string, minClearanceLevel: number, img: string, employeeIds: number[]) {
     return this.http.put(this.urlProj + '/' + id, {
       id: id,
       codename: codename,
       description: description,
-      minClearance: new Clearance(minClearanceLevel, '', []), 
+      minClearance: new Clearance(minClearanceLevel, '', []),
       img: img,
-      employees: employeeIds.map(empId => ({ id: empId })) 
+      employees: employeeIds.map(empId => ({ id: empId }))
     }, {
       observe: 'response'
     });
   }
+
+
+
+
+
 
   deleteProject(id: number): Observable<any> {
     return this.http.delete(`${this.urlProj}/${id}`);

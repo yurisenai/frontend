@@ -5,11 +5,13 @@ import { Employee } from '../models/employee';
 import { HttpService } from '../services/http.service';
 import { Project } from '../models/project';
 import { Clearance } from '../models/clearance';
+import { FormsModule } from '@angular/forms';
+import { Location } from '../models/location';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [MapsComponent, NgFor, NgIf],
+  imports: [MapsComponent, NgFor, NgIf, FormsModule],
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
@@ -56,6 +58,17 @@ export class LandingComponent {
     });
   }
 
+
+  holderId: number = 0;
+  holderFirstName: string="";
+  holderLastName: string="";
+  holderEmail: string="";
+  holderPhoneNumber:string="";
+  holderOccupation:string="";
+  holderClear:number=3;
+  holderImg:string="";
+  holderProj:number=1;
+  holderLocal:number=1
 
 
   getLocationLabel(id: number): string {
@@ -107,4 +120,48 @@ export class LandingComponent {
     }
   }
 
+
+  updateEmployeeLocation(employee: Employee) {
+    if (!employee) {
+      console.error('Employee data is not available.');
+      return;
+    }
+
+    console.log('Employee object:', employee);
+
+    if (!employee.location || !employee.location.id) {
+      console.error('Employee location data is missing or incomplete.');
+      return;
+    }
+
+    const updatedEmployee = new Employee(
+      employee.id,
+      employee.firstName,
+      employee.lastName,
+      employee.email,
+      employee.phoneNumber,
+      employee.occupation,
+      new Clearance(employee.clearance.clearanceLevel, '', []),
+      employee.img,
+      new Project(0, '', '', new Clearance(0, '', []), '', []),
+      new Location(employee.location.id, '', '', '', 0, 0, [])
+    );
+
+    this.httpService.updateEmployee(
+      updatedEmployee.id,
+      updatedEmployee.firstName,
+      updatedEmployee.lastName,
+      updatedEmployee.email,
+      updatedEmployee.phoneNumber,
+      updatedEmployee.occupation,
+      updatedEmployee.clearance.clearanceLevel,
+      updatedEmployee.img,
+      0,
+      updatedEmployee.location.id
+    ).subscribe(response => {
+      this.getAllEmployees();
+    });
+  }
+
 }
+
