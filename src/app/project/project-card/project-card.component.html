@@ -8,12 +8,12 @@
       <h3>{{ project.codename }}</h3>
       <p>{{ project.description }}</p>
       <p>Minimum Clearance: {{ getClearanceLabel(project.minClearance.clearanceLevel) }}</p>
-      
+
       <!-- Display the list of employees associated with the project -->
       <div class="employee-list">
         <h4>Employees:</h4>
         <div *ngFor="let emp of project.employees">
-          <img [src]="emp.img ? emp.img : '../../assets/images/default-employee.png'" alt="Employee Photo" class="employee-photo">
+          <img [src]="emp.img ? emp.img : '../../assets/images/51greylogo.png'" alt="Employee Photo" class="employee-photo">
           <span>{{ emp.firstName }} {{ emp.lastName }}</span>
         </div>
       </div>
@@ -22,7 +22,7 @@
     <div *ngIf="editMode">
       <input type="text" [(ngModel)]="project.codename" placeholder="Project Name" />
       <input type="text" [(ngModel)]="project.description" placeholder="Project Description" />
-      
+
       <select [(ngModel)]="project.minClearance.clearanceLevel" name="clearanceLevel">
         <option [value]="1">Top Secret</option>
         <option [value]="2">Secret</option>
@@ -35,7 +35,7 @@
         <button (click)="toggleEmployeeDropdown()">Add Employee</button>
         <div *ngIf="showEmployeeDropdown" class="employee-dropdown">
           <div *ngFor="let employee of employees" (click)="addEmployeeToProject(employee)">
-            <img [src]="employee.img ? employee.img : '../../assets/images/default-employee.png'" alt="Employee Photo" class="employee-photo">
+            <img [src]="employee.img ? employee.img : '../../assets/images/51greylogo.png'" alt="Employee Photo" class="employee-photo">
             <span>{{ employee.firstName }} {{ employee.lastName }}</span>
           </div>
         </div>
