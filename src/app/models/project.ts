@@ -9,7 +9,7 @@ export class Project {
   description: string;
   minClearance: Clearance;
   img: string;
-  employees: Employee[];
+  employees: Employee[] = [];
 
   constructor(id: number, codename: string, description: string,
       minClearance: Clearance, img: string,

@@ -1,9 +1,11 @@
-
-
-import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
-import { Project, Clearance } from '../../models/project';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Project } from '../../models/project';
+import { Employee } from '../../models/employee';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Clearance } from '../../models/clearance';
+import { HttpService } from '../../services/http.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-project-card',
@@ -12,14 +14,21 @@ import { CommonModule } from '@angular/common';
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.scss']
 })
-export class ProjectCardComponent implements OnChanges {
-  @Input() project: Project = new Project(0, '', '', new Clearance(), '', 0, '', []);  
+export class ProjectCardComponent {
+
+  @Input() project: Project = new Project(0, '', '', new Clearance(0, '', []), '', []);
+  @Input() employees: Employee[] = [];
   @Output() deleteProjectEvent = new EventEmitter<number>();
   @Output() updateProjectEvent = new EventEmitter<Project>();
   @Output() viewProjectEvent = new EventEmitter<Project>();
 
   editMode: boolean = false;
-  originalProject: Project = { ...this.project };  
+  originalProject: Project = { ...this.project };
+  showEmployeeDropdown: boolean = false;
+
+  constructor(private httpService: HttpService) {
+    this.getAllEmployees(); 
+  }
 
   ngOnChanges() {
     this.originalProject = { ...this.project };
@@ -29,14 +38,52 @@ export class ProjectCardComponent implements OnChanges {
     this.editMode = !this.editMode;
     this.originalProject = { ...this.project };
   }
+  
+  toggleEmployeeDropdown(): void {
+    this.showEmployeeDropdown = !this.showEmployeeDropdown;
+  }
 
-  saveUpdate() {
-    this.editMode = false;
-    this.updateProjectEvent.emit(this.project);  
+  getAllEmployees(): void {
+    this.httpService.getAllEmployees().subscribe((response: HttpResponse<any>) => {
+      const employeeArray = response.body as Employee[];
+      this.employees = employeeArray.map(item => new Employee(
+        item.id, item.firstName, item.lastName, item.email, 
+        item.phoneNumber, item.occupation, item.clearance, 
+        item.img, item.projects, item.location
+      ));
+    });
   }
   
+
+  addEmployeeToProject(employee: Employee): void {
+    if (!this.project.employees.some(e => e.id === employee.id)) {
+      this.project.employees.push(employee);
+      this.showEmployeeDropdown = false; 
+      this.updateProjectEmployees();
+    }
+  }
+
+  updateProjectEmployees(): void {
+    const employeeIds = this.project.employees.map(emp => emp.id); 
+    this.httpService.updateProject(
+      this.project.id,
+      this.project.codename,
+      this.project.description,
+      this.project.minClearance.clearanceLevel,
+      this.project.img,
+      employeeIds
+    ).subscribe((response) => {
+      console.log('Project updated with new employee:', response);
+    });
+  }
+
+  saveUpdate() {
+    this.updateProjectEvent.emit(this.project);
+    this.editMode = false; 
+  }  
+  
   cancelUpdate() {
-    this.project = { ...this.originalProject };
+    this.project = { ...this.originalProject };  
     this.editMode = false;
   }
 
@@ -44,12 +91,20 @@ export class ProjectCardComponent implements OnChanges {
     this.deleteProjectEvent.emit(this.project.id);
   }
 
-  viewThisProject() {
-    this.viewProjectEvent.emit(this.project);
-  } 
-
-  updateProject() {
-    this.updateProjectEvent.emit(this.project);
+  getClearanceLabel(id: number): string {
+    switch (id) {
+      case 1:
+        return 'Top Secret';
+      case 2:
+        return 'Secret';
+      case 3:
+        return 'Confidential';
+      case 4:
+        return 'Q Clearance';
+      case 5:
+        return 'L Clearance';
+      default:
+        return 'Clearance Level';
+    }
   }
-  
 }
