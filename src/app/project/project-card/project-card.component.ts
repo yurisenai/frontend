@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Project, Clearance } from '../../models/project';
+import { Project } from '../../models/project';
+import { Employee } from '../../models/employee';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Clearance } from '../../models/clearance';
+import { HttpService } from '../../services/http.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-project-card',
@@ -12,54 +16,95 @@ import { CommonModule } from '@angular/common';
 })
 export class ProjectCardComponent {
 
-  projectId: number = 0;
-  projectcodeName: string = "";
-  projectDescription: string = "";
-  projectminClearance: Clearance = new Clearance();  
-  projectPriority: string = "";
-  projectPersonnel: number = 0;
-  projectImg: string = "";
-  projectEmployees: any[] = [];
-
-  @Input() project: Project = new Project(0, '', '', new Clearance(), '', 0, '', []);  
-
+  @Input() project: Project = new Project(0, '', '', new Clearance(0, '', []), '', []);
+  @Input() employees: Employee[] = [];
   @Output() deleteProjectEvent = new EventEmitter<number>();
   @Output() updateProjectEvent = new EventEmitter<Project>();
   @Output() viewProjectEvent = new EventEmitter<Project>();
 
-  constructor() {
-    this.initializeProjectFields();
+  editMode: boolean = false;
+  originalProject: Project = { ...this.project };
+  showEmployeeDropdown: boolean = false;
+
+  constructor(private httpService: HttpService) {
+    this.getAllEmployees(); 
   }
 
-  initializeProjectFields() {
-    this.projectId = this.project.id;
-    this.projectcodeName = this.project.codename;
-    this.projectDescription = this.project.description;
-    this.projectminClearance = this.project.minClearance;  
-    this.projectPriority = this.project.priority;
-    this.projectPersonnel = this.project.personnel;
-    this.projectImg = this.project.img;
-    this.projectEmployees = this.project.employees;
+  ngOnChanges() {
+    this.originalProject = { ...this.project };
   }
 
-  viewThisProject() {
-    this.viewProjectEvent.emit(this.project);
+  toggleEditMode() {
+    this.editMode = !this.editMode;
+    this.originalProject = { ...this.project };
+  }
+  
+  toggleEmployeeDropdown(): void {
+    this.showEmployeeDropdown = !this.showEmployeeDropdown;
   }
 
-  updateProject() {
-    this.updateProjectEvent.emit(new Project(
-      this.projectId,
-      this.projectcodeName,
-      this.projectDescription,
-      this.projectminClearance, 
-      this.projectPriority,
-      this.projectPersonnel,
-      this.projectImg,
-      this.projectEmployees
-    ));
+  getAllEmployees(): void {
+    this.httpService.getAllEmployees().subscribe((response: HttpResponse<any>) => {
+      const employeeArray = response.body as Employee[];
+      this.employees = employeeArray.map(item => new Employee(
+        item.id, item.firstName, item.lastName, item.email, 
+        item.phoneNumber, item.occupation, item.clearance, 
+        item.img, item.projects, item.location
+      ));
+    });
+  }
+  
+
+  addEmployeeToProject(employee: Employee): void {
+    if (!this.project.employees.some(e => e.id === employee.id)) {
+      this.project.employees.push(employee);
+      this.showEmployeeDropdown = false; 
+      this.updateProjectEmployees();
+    }
+  }
+
+  updateProjectEmployees(): void {
+    const employeeIds = this.project.employees.map(emp => emp.id); 
+    this.httpService.updateProject(
+      this.project.id,
+      this.project.codename,
+      this.project.description,
+      this.project.minClearance.clearanceLevel,
+      this.project.img,
+      employeeIds
+    ).subscribe((response) => {
+      console.log('Project updated with new employee:', response);
+    });
+  }
+
+  saveUpdate() {
+    this.updateProjectEvent.emit(this.project);
+    this.editMode = false; 
+  }  
+  
+  cancelUpdate() {
+    this.project = { ...this.originalProject };  
+    this.editMode = false;
   }
 
   deleteThisProject() {
     this.deleteProjectEvent.emit(this.project.id);
+  }
+
+  getClearanceLabel(id: number): string {
+    switch (id) {
+      case 1:
+        return 'Top Secret';
+      case 2:
+        return 'Secret';
+      case 3:
+        return 'Confidential';
+      case 4:
+        return 'Q Clearance';
+      case 5:
+        return 'L Clearance';
+      default:
+        return 'Clearance Level';
+    }
   }
 }
