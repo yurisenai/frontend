@@ -71,7 +71,6 @@ export class EmployeeComponent {
     });
   }
 
-  //this method runs for the card children buttons
   processDeleteEvent(id:number){
     console.log(id);
     this.deleteEmployee(id);
