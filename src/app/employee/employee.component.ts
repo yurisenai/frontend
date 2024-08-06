@@ -19,6 +19,7 @@ export class EmployeeComponent {
 
   constructor(private httpService: HttpService){
     this.getAllEmployees();
+
   }
 
   getAllEmployees(){
