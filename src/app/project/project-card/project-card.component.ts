@@ -27,7 +27,7 @@ export class ProjectCardComponent {
   showEmployeeDropdown: boolean = false;
 
   constructor(private httpService: HttpService) {
-    this.getAllEmployees(); 
+    this.getAllEmployees();
   }
 
   ngOnChanges() {
@@ -38,7 +38,7 @@ export class ProjectCardComponent {
     this.editMode = !this.editMode;
     this.originalProject = { ...this.project };
   }
-  
+
   toggleEmployeeDropdown(): void {
     this.showEmployeeDropdown = !this.showEmployeeDropdown;
   }
@@ -47,24 +47,41 @@ export class ProjectCardComponent {
     this.httpService.getAllEmployees().subscribe((response: HttpResponse<any>) => {
       const employeeArray = response.body as Employee[];
       this.employees = employeeArray.map(item => new Employee(
-        item.id, item.firstName, item.lastName, item.email, 
-        item.phoneNumber, item.occupation, item.clearance, 
+        item.id, item.firstName, item.lastName, item.email,
+        item.phoneNumber, item.occupation, item.clearance,
         item.img, item.projects, item.location
       ));
     });
   }
-  
 
-  addEmployeeToProject(employee: Employee): void {
-    if (!this.project.employees.some(e => e.id === employee.id)) {
-      this.project.employees.push(employee);
-      this.showEmployeeDropdown = false; 
-      this.updateProjectEmployees();
-    }
+  updateEmployee(employee:Employee){
+    this.httpService.updateEmployee(
+      employee.id,
+      employee.firstName,
+      employee.lastName,
+      employee.email,
+      employee.phoneNumber,
+      employee.occupation,
+      employee.clearance.clearanceLevel,
+      employee.img,
+      employee.projects.id,
+      employee.location.id).subscribe(response => {
+      this.getAllEmployees();
+    });
+  }
+
+
+  addEmployeeToProject(employee: Employee, project : Project): void {
+    console.log(employee.firstName, project.codename);
+    console.log(employee.projects);
+    employee.projects = project;
+    console.log(employee.projects);
+    //this.updateEmployee(employee);
+
   }
 
   updateProjectEmployees(): void {
-    const employeeIds = this.project.employees.map(emp => emp.id); 
+    const employeeIds = this.project.employees.map(emp => emp.id);
     this.httpService.updateProject(
       this.project.id,
       this.project.codename,
@@ -79,11 +96,11 @@ export class ProjectCardComponent {
 
   saveUpdate() {
     this.updateProjectEvent.emit(this.project);
-    this.editMode = false; 
-  }  
-  
+    this.editMode = false;
+  }
+
   cancelUpdate() {
-    this.project = { ...this.originalProject };  
+    this.project = { ...this.originalProject };
     this.editMode = false;
   }
 

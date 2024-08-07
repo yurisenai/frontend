@@ -34,7 +34,7 @@
       <div class="add-employee-section">
         <button (click)="toggleEmployeeDropdown()">Add Employee</button>
         <div *ngIf="showEmployeeDropdown" class="employee-dropdown">
-          <div *ngFor="let employee of employees" (click)="addEmployeeToProject(employee)">
+          <div *ngFor="let employee of employees" (click)="addEmployeeToProject(employee, project)">
             <img [src]="employee.img ? employee.img : '../../assets/images/51greylogo.png'" alt="Employee Photo" class="employee-photo">
             <span>{{ employee.firstName }} {{ employee.lastName }}</span>
           </div>
