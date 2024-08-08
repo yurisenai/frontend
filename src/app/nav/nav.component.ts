@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 import { ThemeService } from '../services/theme.service';
 
+
 @Component({
   selector: 'app-nav',
   standalone: true,
@@ -17,4 +18,9 @@ export class NavComponent {
   toggleTheme() {
     this.themeService.toggleDarkMode();
   }
+
+  
+
+
+
 }
