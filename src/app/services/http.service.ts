@@ -68,7 +68,7 @@ export class HttpService {
       occupation: occupation,
       clearance: new Clearance(clearId, '', []),
       img: img,
-      projects: new Project(5, '', '', new Clearance(0, '', []), '', []),
+      projects: new Project(1, '', '', new Clearance(0, '', []), '', []),
       location: new Location(localId, '', '', '', 0, 0, [])
     },
     {
