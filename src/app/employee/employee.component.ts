@@ -1,56 +1,51 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { EmployeeCardComponent } from './employee-card/employee-card.component';
 import { Employee } from '../models/employee';
 import { HttpService } from '../services/http.service';
-import { Project } from '../models/project';
+import { NotificationComponent } from '../notification/notification.component';
+import { NotificationModule } from '../notification/notification.module'; 
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-employee',
   standalone: true,
-  imports: [CommonModule, EmployeeCardComponent],
+  imports: [CommonModule, EmployeeCardComponent, NotificationModule], 
   templateUrl: './employee.component.html',
-  styleUrl: './employee.component.scss'
+  styleUrls: ['./employee.component.scss']
 })
-
 export class EmployeeComponent {
-
   employees: Employee[] = [];
+  @ViewChild(NotificationComponent) notification!: NotificationComponent;
 
-  constructor(private httpService: HttpService){
+  constructor(private httpService: HttpService) {
     this.getAllEmployees();
-
   }
 
-  getAllEmployees(){
+  getAllEmployees() {
     this.httpService.getAllEmployees().subscribe(response => {
       if (response && response.body) {
         this.employees = [];
-
-        let body: any = response.body || {}
+        const body: any = response.body || {};
         for (let item of body) {
-          this.employees.push(new Employee(item.id, item.firstName,
-             item.lastName,item.email, item.phoneNumber, item.occupation,item.clearance,item.img, item.projects,item.location));
-
+          this.employees.push(new Employee(
+            item.id, 
+            item.firstName, 
+            item.lastName, 
+            item.email, 
+            item.phoneNumber, 
+            item.occupation, 
+            item.clearance, 
+            item.img, 
+            item.projects, 
+            item.location
+          ));
         }
       }
     });
   }
 
-  getEmployeesById(id:number){
-    this.httpService.getEmployeeById(id).subscribe(data=>{
-      this.employees = [];
-      console.log("Successful Get Employee: "+ id)
-    });
-  }
-
-  createEmployee(){
-    this.httpService.createEmployee().subscribe(data=>{
-      this.getAllEmployees();
-    });
-  }
-
-  updateEmployee(employee:Employee){
+  updateEmployee(employee: Employee) {
+    this.notification.showUpdatingMessage();
     this.httpService.updateEmployee(
       employee.id,
       employee.firstName,
@@ -61,19 +56,33 @@ export class EmployeeComponent {
       employee.clearance.clearanceLevel,
       employee.img,
       employee.projects.id,
-      employee.location.id).subscribe(response => {
+      employee.location.id
+    ).subscribe(response => {
+      setTimeout(() => {
+        this.notification.showMessage("Successfully Updated");
+        this.getAllEmployees();
+      }, 1500);
+    });
+  }
+
+  createEmployee() {
+    this.notification.showMessage("Creating...", 1500);
+    this.httpService.createEmployee().subscribe(data => {
+      setTimeout(() => {
+        this.notification.showMessage("Successfully Created");
+        this.getAllEmployees();
+      }, 1500); 
+    });
+  }
+
+  deleteEmployee(id: number) {
+    this.httpService.deleteEmployee(id).subscribe(data => {
+      this.notification.showMessage("Employee Deleted");
       this.getAllEmployees();
     });
   }
 
-  deleteEmployee(id:number){
-    this.httpService.deleteEmployee(id).subscribe(data=>{
-      this.getAllEmployees();
-    });
-  }
-
-  processDeleteEvent(id:number){
-    console.log(id);
+  processDeleteEvent(id: number) {
     this.deleteEmployee(id);
   }
 }
