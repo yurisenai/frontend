@@ -4,12 +4,17 @@
     <i class="fas fa-plus" (click)="createEmployee()"><strong>+</strong></i>
 </div>
 
+<app-notification></app-notification>
 
 <div class="card-container">
-    @for (employee of employees; track $index){
-        <app-employee-card [employee]="employee"
-        (updateEmployeeEvent)="updateEmployee($event)"
-        (deleteEmployeeEvent)="processDeleteEvent($event)"></app-employee-card>
-    }
+  @for (employee of employees; track $index){
+    <app-employee-card 
+      [employee]="employee"
+      (updateEmployeeEvent)="updateEmployee($event)"
+      (deleteEmployeeEvent)="processDeleteEvent($event)">
+    </app-employee-card>
+  }
 </div>
+
+
 
