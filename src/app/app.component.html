@@ -1,13 +1,45 @@
-<div class="main-flexbox">
-  <app-nav class="app-nav"></app-nav>
-
-  <div class="router-outlet">
-    
-    <router-outlet />
+<div *ngIf="!isAuthenticated">
+  
+  <div class="login-wrapper" *ngIf="!isAuthenticated">
+    <div class="login-form">
+      <h1>Login</h1>
+      <button (click)="login()">Login</button>
+    </div>
   </div>
 
-  <app-footer class="app-footer"></app-footer>
+  <!-- <div class="login-wrapper" *ngIf="!isAuthenticated">
+    <div class="login-form">
+      <h1>Login</h1>
+      <form (ngSubmit)="login()">
+        <div>
+          <label for="username">Username:</label>
+          <input type="text" id="username" [(ngModel)]="username" name="username" required />
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input type="password" id="password" [(ngModel)]="password" name="password" required />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </div> -->
 
 </div>
+
+<div *ngIf="isAuthenticated">
+  <div class="main-flexbox">
+    <app-nav class="app-nav"></app-nav>
+  
+
+    <div class="router-outlet">
+      
+      <router-outlet />
+    </div>
+  
+    <app-footer class="app-footer"></app-footer>
+  
+  </div>
+</div>
+
 
 
