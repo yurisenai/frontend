@@ -6,13 +6,14 @@ import { NgIf } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Buffer } from 'buffer';
 import { TokenService } from './services/token.service';
+import { FormsModule } from '@angular/forms';
 
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavComponent, FooterComponent, NgIf],
+  imports: [RouterOutlet, NavComponent, FooterComponent, NgIf, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -21,8 +22,8 @@ export class AppComponent {
 
   constructor(private http: HttpClient, private token: TokenService){};
 
-  username: string = 'itsme';
-  password: string = 'password'
+  username: string = '';
+  password: string = ''
   baseUrl: string = ' http://localhost:8080'
 
   isAuthenticated: boolean = false;

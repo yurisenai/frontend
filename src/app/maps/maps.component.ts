@@ -84,9 +84,19 @@ export class MapsComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if (employee.location && employee.location.longitude !== undefined && employee.location.latitude !== undefined) {
         const marker = new maplibregl.Marker()
-          .setLngLat([employee.location.latitude, employee.location.longitude])
-          .setPopup(new maplibregl.Popup().setHTML(`${employee.location.employees.map(emp => `${emp.firstName} ${emp.lastName}`).join('<br>')}`))
-          .addTo(this.map!);
+            .setLngLat([employee.location.latitude, employee.location.longitude])
+            .addTo(this.map!);
+    
+        const popup = new maplibregl.Popup()
+            .setHTML(`${employee.location.employees.map(emp => `${emp.firstName} ${emp.lastName}`).join('<br>')}`);
+    
+        marker.getElement().addEventListener('mouseenter', () => {
+            popup.setLngLat([employee.location.latitude, employee.location.longitude]).addTo(this.map!);
+        });
+
+        marker.getElement().addEventListener('mouseleave', () => {
+            popup.remove();
+        });
 
         this.markers.push(marker);
       } else {
