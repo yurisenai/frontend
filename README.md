@@ -1,3 +1,6 @@
+# NOTE
+This branch is for a presentation WITHOUT security features. Implementation of our security stopped all functionality of the application
+
 # Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.8.
